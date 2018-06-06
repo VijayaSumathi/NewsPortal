@@ -1,0 +1,15 @@
+extends layout
+
+block content
+ p Welcome to  #{title}
+ 
+  h1 Sign up
+    form(name="form", method="post" action="/user")
+        div.input4
+            span.label title
+            input(type="text", name="title")
+        div.input3
+           span.label   enter data 
+           textarea(rows='10', cols='50' , name='text')           
+        div.actions
+            input(type="submit", value="Register")
