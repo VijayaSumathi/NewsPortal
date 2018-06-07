@@ -72,7 +72,10 @@ router.post('/uploadnews', function(req, res, next) {
     });
 });
 
-router.post('/adminlogin', function(req, res, next) {
+router.get('/home', function(req, res, next) {
+    res.render('approve');
+});
+router.post('/login', function(req, res, next) {
     var username = req.body.name;
     var password = req.body.pass;
 
@@ -80,8 +83,12 @@ router.post('/adminlogin', function(req, res, next) {
     console.log(password);
 
     login.find({ name: username }, function(err, data) {
-        if (password == data[0].password) {
-            res.render('approval', { password: "correct" });
+        if (password == data[0].password) { <<
+            << << < HEAD
+            res.render('approval', { password: "correct" }); ===
+            === =
+            res.redirect('/home'); >>>
+            >>> > 061 a26a4cff3c0788939eb6b8baaaeadc616f023
         } else {
             res.render('login', { password: "wrong" });
         }
@@ -94,7 +101,7 @@ router.post('/adminlogin', function(req, res, next) {
 
 
 
-router.post('/admin', function(req, res, next) {
+router.get('/news/all', function(req, res, next) {
 
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
@@ -104,7 +111,7 @@ router.post('/admin', function(req, res, next) {
     });
 });
 
-router.post('/approve', function(req, res, next) {
+router.post('/approval', function(req, res, next) {
 
 
     var status1 = req.body.status;

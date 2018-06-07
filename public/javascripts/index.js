@@ -8,9 +8,10 @@ $(function(){
   var $newslist=$('#newslist');
 $.ajax({
 type:'GET',
-url:'https//localhost:3000/user',
+url:'/news/all',
 success:function(newslist){
-  $each(newslist,function(i,user)
+  console.log(newslist);
+  $.each(newslist.docs,function(i,user)
   {
 $newslist.append('<li>title:'+user.title+',description:'+user.description+'</li>')
   });
