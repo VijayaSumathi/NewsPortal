@@ -5,9 +5,16 @@
 //console.log(ourRequest.responseText);
 //};
 $(function(){
+  var $newslist=$('#newslist');
 $.ajax({
-type:'GET'
-url:
+type:'GET',
+url:'https//localhost:3000/user',
+success:function(newslist){
+  $each(newslist,function(i,user)
+  {
+$newslist.append('<li>title:'+user.title+',description:'+user.description+'</li>')
+  });
+}
 });
 
 });
