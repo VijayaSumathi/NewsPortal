@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:res.req.file.filename
+            path: __dirname + '/../public/images/'+res.req.file.filename
 
         });
         news.save()
@@ -62,12 +62,12 @@ router.post('/uploadnews', function(req, res, next) {
                 //res.send(data);
             }).catch(err => {
                 res.status(500).send({
-                    message: err.message || "Some error occurred while saving data."
+                    message: err.message || "Some error occurred ."
                 });
                 console.log("error");
             });
-        res.render('index',{ news: news });
-        
+       // res.render('index',{ news: news });
+        console.log('news uploaded');
 
     });
 });
@@ -151,7 +151,15 @@ router.post('/approval', function(req, res, next) {
 
 });
 
+router.get('/news/approve', function(req, res, next) {
 
+  console.log("inside news approve");
+  approvednews.find({}, function(err, docs) {
+      if (err) { res.json(err); } else {
+          res.json({ docs: docs });
+      }
+  });
+});
 
 
 module.exports = router;
