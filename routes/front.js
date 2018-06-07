@@ -3,19 +3,19 @@ var router = express.Router();
 var fs = require('fs')
 
 $.get("/approve", function(data, ) {
-    for (i = 0; i < mystring.obj.length; i++) {
+    for (i = 0; i < mineString.obj.length; i++) {
 
-        var mystring = ['<li>',
+        var mineString = ['<li>',
             '<h3>' + obj.title + '</h3>',
             '<img>' + obj.imageurl + '</img>',
             '<p>' + obj.description + '</p>',
             '</li>'
         ].join('');
 
-        $('#newlist').append(mystring)
+        $('#newlist').append(mineString)
     }
     $.each(data, function(index, value) {
         $("#result").append(index + ": " + value + '<br>');
-        $('#newlist').append(mystring)
+        $('#newlist').append(mineString)
     })
 })
