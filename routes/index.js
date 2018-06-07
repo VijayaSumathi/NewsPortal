@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path: res.req.file.filename
+            path: __dirname + '/../public/images/'+res.req.file.filename
 
         });
         news.save()
@@ -62,7 +62,7 @@ router.post('/uploadnews', function(req, res, next) {
                 //res.send(data);
             }).catch(err => {
                 res.status(500).send({
-                    message: err.message || "Some error occurred while creating the Note."
+                    message: err.message || "Some error occurred while saving data."
                 });
                 console.log("error");
             });
