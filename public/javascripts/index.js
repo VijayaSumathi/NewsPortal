@@ -13,7 +13,7 @@ success:function(newslist){
   console.log(newslist);
   $.each(newslist.docs,function(i,user)
   {
-$newslist.append('<li>title:'+user.title+',description:'+user.description+'</li>')
+$newslist.append('<li>title:'+user.title+',image:'+user.path+',description:'+user.description+'</li>')
   });
 }
 });
