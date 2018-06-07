@@ -51,7 +51,7 @@ html
     .main
       h2 UPLOAD YOUR NEWS HERE!
     .container
-      form(action='/user' method='post')
+      form(action='/uploadnews' method='post')
         label(for='lname') Title
         input#lname(type='text', name='title', placeholder='enter the title of news...', maxlength='100')
         //
@@ -64,6 +64,6 @@ html
         label(for='subject') Description
         textarea#subject(name='description', placeholder='Write something..', style='height:200px', maxlength='400')
         label(for='country') Upload image
-        input(type='file', name='image')
+        input(type='file', name='pic')
         br
         input(type='submit', value='Submit')

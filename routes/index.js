@@ -8,8 +8,28 @@ const path = require('path');
 
 
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'index' });
 });
+router.get('/index', function(req, res, next) {
+    res.render('upload');
+});
+
+router.get('/first', function(req, res, next) {
+    res.render('one');
+});
+router.get('/second', function(req, res, next) {
+    res.render('two');
+});
+router.get('/third', function(req, res, next) {
+    res.render('three');
+});
+
+router.get('/last', function(req, res, next) {
+    res.render('index');
+});
+
+
+
 
 router.post('/uploadnews', function(req, res, next) {
 
@@ -28,9 +48,9 @@ router.post('/uploadnews', function(req, res, next) {
     upload(req, res, function(err, result) {
 
         const news = new uploadmynew({
-            //  title: req.body.title, 
-            // description: req.body.description,
-            path: res.req.file.filename
+            title: req.body.title,
+            description: req.body.description,
+            //path: res.req.file.filename
 
         });
         news.save()
