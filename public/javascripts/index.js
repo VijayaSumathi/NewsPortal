@@ -7,10 +7,11 @@
 $(function(){
   var $newslist=$('#newslist');
 $.ajax({
-    type:'GET',
-      url:'http://localhost:3000/uploadnews',
-    success:function(newslist){
-    $each(newslist,function(i,user)
+type:'GET',
+url:'/news/all',
+success:function(newslist){
+  console.log(newslist);
+  $.each(newslist.docs,function(i,user)
   {
 $newslist.append('<li>title:'+user.title+',description:'+user.description+'</li>')
   });
