@@ -63,8 +63,8 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
-        res.json({ news: news });
-        console.log('The filename is ' + res.req.file.filename);
+        res.render('index',{ news: news });
+        //console.log('The filename is ' + res.req.file.filename);
 
     });
 });
