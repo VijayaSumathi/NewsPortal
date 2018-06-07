@@ -23,7 +23,7 @@ router.get('/second', function(req, res, next) {
 router.get('/third', function(req, res, next) {
     res.render('three');
 });
-router.get('/adminloginpage', function(req, res, next) {
+router.get('/login', function(req, res, next) {
   res.render('login');
 });
 
@@ -72,7 +72,10 @@ router.post('/uploadnews', function(req, res, next) {
     });
 });
 
-router.post('/adminlogin', function(req, res, next) {
+router.get('/home', function(req,res, next){
+  res.render('approve');
+});
+router.post('/login', function(req, res, next) {
     var username = req.body.name;
     var password = req.body.pass;
 
@@ -81,7 +84,7 @@ router.post('/adminlogin', function(req, res, next) {
 
     login.find({ name: username }, function(err, data) {
         if (password == data[0].password) {
-            res.render('approval',{ password: "correct" });
+            res.redirect('/home');
         } else {
           res.render('login',{ password: "wrong" });
         }
@@ -104,7 +107,7 @@ router.post('/admin', function(req, res, next) {
     });
 });
 
-router.post('/approve', function(req, res, next) {
+router.post('/approval', function(req, res, next) {
 
 
     var status1 = req.body.status;
