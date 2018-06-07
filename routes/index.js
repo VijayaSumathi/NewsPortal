@@ -50,7 +50,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path: res.req.file.filename
+           // path: res.req.file.filename
 
         });
         news.save()
@@ -63,7 +63,7 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
-        res.render('index',{ news: news });
+        res.render('approval',{ news: news });
         //console.log('The filename is ' + res.req.file.filename);
 
     });
