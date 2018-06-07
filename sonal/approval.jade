@@ -1,4 +1,11 @@
-doctype html
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title Document
+  bodydoctype html
 html
   head
     meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -39,7 +46,12 @@ html
     //      });
     //});
     //});$(document).ready(function(){
-    
+    $("#div1").load("text.json", function(responseTxt, statusTxt, xhr){
+    if(statusTxt == "success")
+    alert("External content loaded successfully!");
+    if(statusTxt == "error")
+    alert("Error: " + xhr.status + ": " + xhr.statusText);
+    });
   body
     .content
       .A

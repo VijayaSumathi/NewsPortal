@@ -2,14 +2,13 @@ var router = express.Router();
 
 var fs = require('fs')
 
-$.get("url", function(data,){
-for(i=0;i<mystring.obj.length;i++)
-{
+$.get("server.js", function(data,){
+
 
 var mystring = ['<li>',
-            '<h3>'+obj.title+'</h3>',
-            '<img>'+obj.imageurl+'</img>',
-            '<p>'+ obj.description +'</p>',
+            '<h3>'+docs.title+'</h3>',
+            '<img>'+docs.imageurl+'</img>',
+            '<p>'+ docs.description +'</p>',
             '<button>Accept</button>',
     '</li>'].join('');
     

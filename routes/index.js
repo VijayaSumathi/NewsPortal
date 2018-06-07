@@ -24,7 +24,8 @@ router.post('/user', function(req, res, next) {
         });
         console.log("error");
     });
-  res.json({news:news});
+  //res.json({news:news});
+  res.render("display",{news:news})
 });
 
 
