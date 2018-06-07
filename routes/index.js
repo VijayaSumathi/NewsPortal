@@ -24,7 +24,7 @@ router.get('/third', function(req, res, next) {
     res.render('three');
 });
 router.get('/adminloginpage', function(req, res, next) {
-  res.render('login');
+    res.render('login');
 });
 
 router.get('/last', function(req, res, next) {
@@ -66,8 +66,8 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
-        res.render('index',{ news: news });
-        
+        res.render('index', { news: news });
+
 
     });
 });
@@ -81,9 +81,9 @@ router.post('/adminlogin', function(req, res, next) {
 
     login.find({ name: username }, function(err, data) {
         if (password == data[0].password) {
-            res.render('approval',{ password: "correct" });
+            res.render('approval', { password: "correct" });
         } else {
-          res.render('login',{ password: "wrong" });
+            res.render('login', { password: "wrong" });
         }
 
         console.log(">>>> ");
