@@ -67,7 +67,7 @@ login.find({name:username}, function(err, data){
    res.render('approval');
  }
  else{
-  res.render('login',{password:"incorrect wrong"});
+  res.render('login',{password:" wrong password"});
  }
 
   console.log(">>>> " );
