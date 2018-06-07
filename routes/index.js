@@ -11,66 +11,64 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
-router.post('/uploadnews', function(req, res, next) { 
-  
-  const storageEngine = multer.diskStorage({
-    destination: __dirname + '/../public/images/',
-    filename: function(req, file, fn){
-      fn(null,file.fieldname+'-'+ Date.now() + path.extname(file.originalname));
-    }
-    
-  });
-  
-  const upload =  multer({
-    storage: storageEngine    
-  }).single('pic');
+router.post('/uploadnews', function(req, res, next) {
 
-  upload(req, res, function(err, result) {
+    const storageEngine = multer.diskStorage({
+        destination: __dirname + '/../public/images/',
+        filename: function(req, file, fn) {
+            fn(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        }
 
-    const news = new uploadmynew({
-    //  title: req.body.title, 
-     // description: req.body.description,
-      path:res.req.file.filename
-  
-  });
-  news.save()
-  .then(data => {
-      console.log("inserted");
-      //res.send(data);
-  }).catch(err => {
-      res.status(500).send({
-          message: err.message || "Some error occurred while creating the Note."
-      });
-      console.log("error");
-  });
-   res.json({news:news});
-    console.log('The filename is ' +res.req.file.filename );
-    
-  });  
+    });
+
+    const upload = multer({
+        storage: storageEngine
+    }).single('pic');
+
+    upload(req, res, function(err, result) {
+
+        const news = new uploadmynew({
+            //  title: req.body.title, 
+            // description: req.body.description,
+            path: res.req.file.filename
+
+        });
+        news.save()
+            .then(data => {
+                console.log("inserted");
+                //res.send(data);
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while creating the Note."
+                });
+                console.log("error");
+            });
+        res.json({ news: news });
+        console.log('The filename is ' + res.req.file.filename);
+
+    });
 });
 
 router.post('/adminlogin', function(req, res, next) {
-  var username=req.body.name;
-  var password=req.body.pass;
-  
-  console.log(username);
-  console.log(password);
-  
-login.find({name:username}, function(err, data){
- if(password==data[0].password )
- {
-   res.json({password:"correct"});
- }
- else{
-  res.json({password:"wrong"});
- }
+    var username = req.body.name;
+    var password = req.body.pass;
 
-  console.log(">>>> " );
-  });
-  
+    console.log(username);
+    console.log(password);
+
+    login.find({ name: username }, function(err, data) {
+        if (password == data[0].password) {
+            res.json({ password: "correct" });
+        } else {
+            res.json({ password: "wrong" });
+        }
+
+        console.log(">>>> ");
+    });
+
 });
 
-   
+
 
 
 router.post('/admin', function(req, res, next) {
