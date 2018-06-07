@@ -51,7 +51,7 @@ html
     .main
       h2 UPLOAD YOUR NEWS HERE!
     .container
-      form(action='/uploadnews' method='post')
+      form(action='/uploadnews' method='post' enctype='multipart/form-data')
         label(for='lname') Title
         input#lname(type='text', name='title', placeholder='enter the title of news...', maxlength='100')
         //
