@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
-var uploadmynew= require('../models/uploadNews');
-var login= require('../models/adminlogin');
-var approvednews= require('../models/adminapprove');
+var uploadmynew = require('../models/uploadNews');
+var login = require('../models/adminlogin');
+var approvednews = require('../models/adminapprove');
 const multer = require('multer');
 const path = require('path');
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express' });
 });
 
 router.post('/uploadnews', function(req, res, next) { 
@@ -47,12 +47,7 @@ router.post('/uploadnews', function(req, res, next) {
     console.log('The filename is ' +res.req.file.filename );
     
   });  
- 
 });
-
-
-
-
 
 router.post('/adminlogin', function(req, res, next) {
   var username=req.body.name;
@@ -75,66 +70,61 @@ login.find({name:username}, function(err, data){
   
 });
 
+   
 
 
-router.post('/admin', function(req, res, next){
- 
-  console.log("inside approve");
-  uploadmynew.find({}, function(err, docs){
-    if(err) {res.json(err);}
-    else {
-     res.json({docs: docs});
-    }
-   });
+router.post('/admin', function(req, res, next) {
+
+    console.log("inside approve");
+    uploadmynew.find({}, function(err, docs) {
+        if (err) { res.json(err); } else {
+            res.json({ docs: docs });
+        }
+    });
 });
 
-router.post('/approve', function(req, res, next){
- 
-  
-  var status1=req.body.status;
-  var id1=req.body.id;
-  if(status1.toLowerCase()=="accept")
-  {    
-    
-    uploadmynew.find({_id:id1}, function(err, data){
-      if(err) {res.json(err);}
-    else {      
-       const approvenews = new approvednews({
-        title:data[0].title, 
-        description: data[0].description
-       });
-        
-       approvenews.save(function(err){
-               console.log("inserted");
-               if(err)
-               console.error(err);
-                
-       });        
-      
-       res.json(data);
+router.post('/approve', function(req, res, next) {
 
 
-      }});  
-      uploadmynew.findOne({_id:id1}, function (error, data){
-        console.log("This object will get deleted " + data);
-        data.remove();
+    var status1 = req.body.status;
+    var id1 = req.body.id;
+    if (status1.toLowerCase() == "accept") {
 
-    }); 
-     
-    } 
-    
-  
-  
-  else{
-    uploadmynew.findOne({_id:id1}, function (error, data){
-      console.log("This object will get deleted " + data);
-      data.remove();
+        uploadmynew.find({ _id: id1 }, function(err, data) {
+            if (err) { res.json(err); } else {
+                const approvenews = new approvednews({
+                    title: data[0].title,
+                    description: data[0].description
+                });
 
-    });
+                approvenews.save(function(err) {
+                    console.log("inserted");
+                    if (err)
+                        console.error(err);
 
-    res.json({display:"News rejected"});
-  }
-   
+                });
+
+                res.json(data);
+
+
+            }
+        });
+        uploadmynew.findOne({ _id: id1 }, function(error, data) {
+            console.log("This object will get deleted " + data);
+            data.remove();
+
+        });
+
+    } else {
+        uploadmynew.findOne({ _id: id1 }, function(error, data) {
+            console.log("This object will get deleted " + data);
+            data.remove();
+
+        });
+
+        res.json({ display: "News rejected" });
+    }
+
 });
 
 

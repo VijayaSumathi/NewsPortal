@@ -51,7 +51,7 @@ html
     .main
       h2 UPLOAD YOUR NEWS HERE!
     .container
-      form(action='')
+      form(action='/user' method='post')
         label(for='lname') Title
         input#lname(type='text', name='title', placeholder='enter the title of news...', maxlength='100')
         //
@@ -62,7 +62,7 @@ html
           <option value="usa">USA</option>
           </select>
         label(for='subject') Description
-        textarea#subject(name='subject', placeholder='Write something..', style='height:200px', maxlength='400')
+        textarea#subject(name='description', placeholder='Write something..', style='height:200px', maxlength='400')
         label(for='country') Upload image
         input(type='file', name='image')
         br
