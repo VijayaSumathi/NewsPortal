@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/user', function(req, res, next) { 
+router.post('/uploadnews', function(req, res, next) { 
   
   const storageEngine = multer.diskStorage({
     destination: __dirname + '/../public/images/',
@@ -45,7 +45,7 @@ router.post('/user', function(req, res, next) {
   });
    res.json({news:news});
     console.log('The filename is ' +res.req.file.filename );
-    console.log("!!");
+    
   });  
  
 });
@@ -54,7 +54,7 @@ router.post('/user', function(req, res, next) {
 
 
 
-router.post('/login', function(req, res, next) {
+router.post('/adminlogin', function(req, res, next) {
   var username=req.body.name;
   var password=req.body.pass;
   
