@@ -11,6 +11,11 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+router.get('/login', function(req, res, next){
+  res.render('login', {title: uploadnews});
+
+});
+
 router.post('/uploadnews', function(req, res, next) { 
   
   const storageEngine = multer.diskStorage({
@@ -59,10 +64,10 @@ router.post('/adminlogin', function(req, res, next) {
 login.find({name:username}, function(err, data){
  if(password==data[0].password )
  {
-   res.json({password:"correct"});
+   res.render('approval');
  }
  else{
-  res.json({password:"wrong"});
+  res.render('login',{password:"incorrect wrong"});
  }
 
   console.log(">>>> " );
