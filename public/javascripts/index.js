@@ -4,6 +4,13 @@
 //ourRequest.onload=function(){
 //console.log(ourRequest.responseText);
 //};
+$(function(){
+$.ajax({
+type:'GET'
+url:
+});
+
+});
 //$get
 //var mystring = ['<li>',
 //'<h3>'+docs.title+'</h3>',
