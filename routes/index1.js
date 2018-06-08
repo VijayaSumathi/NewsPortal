@@ -11,7 +11,7 @@ $(function() {
             console.log(newslist);
 
             $.each(newslist.docs, function(i, user) {
-                $three.append('<li>title:' + user.title + ',image:' + user.path + ',description:' + user.description + '</li>')
+                $three.append('<li> ' + user.title + ',' + user.path + ' ,' + user.description + ' </li>')
             });
         }
     });
