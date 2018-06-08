@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path: __dirname + '/../public/images/'+res.req.file.filename
+            path:res.req.file.filename
 
         });
         news.save()
@@ -66,7 +66,7 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
-       // res.render('index',{ news: news });
+            res.render('index',{ upload: "news uploaded" });
         console.log('news uploaded');
 
     });
@@ -82,14 +82,26 @@ router.post('/login', function(req, res, next) {
     console.log(username);
     console.log(password);
 
-    login.find({ name: username }, function(err, data) {
-        if (password == data[0].password) {
+    login.find({}, function(err, data) {
+        if (username == data[0].name) {
+            if(password==data[0].password)
+            {
             res.redirect('/home');
-        } else {
-          res.render('login',{ password: "wrong" });
+            }
+            else
+            { 
+                 console.log("wrong password")
+                res.render('login',{ password: "wrong password" });
+            }
+        } 
+        else
+         {
+            console.log("wrong username")
+          res.render('login',{ password: "wrong username" });
         }
-
-        console.log(">>>> ");
+ 
+         
+        console.log(">>>>");
     });
 
 });
