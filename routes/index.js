@@ -53,7 +53,11 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
+<<<<<<< HEAD
             path: __dirname + '/../public/images/' + res.req.file.filename
+=======
+            path:'/../public/images/'+res.req.file.filename
+>>>>>>> f65d1137ddd5b115b72187c56d6f43ed994dc41a
 
         });
         news.save()
@@ -66,7 +70,11 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
+<<<<<<< HEAD
         // res.render('index',{ news: news });
+=======
+            res.render('index',{ upload: "news uploaded" });
+>>>>>>> f65d1137ddd5b115b72187c56d6f43ed994dc41a
         console.log('news uploaded');
 
     });
@@ -75,6 +83,8 @@ router.post('/uploadnews', function(req, res, next) {
 router.get('/home', function(req, res, next) {
     res.render('approve');
 });
+
+
 router.post('/login', function(req, res, next) {
     var username = req.body.name;
     var password = req.body.pass;
@@ -82,14 +92,31 @@ router.post('/login', function(req, res, next) {
     console.log(username);
     console.log(password);
 
-    login.find({ name: username }, function(err, data) {
-        if (password == data[0].password) {
+    login.find({}, function(err, data) {
+        if (username == data[0].name) {
+            if(password==data[0].password)
+            {
             res.redirect('/home');
+<<<<<<< HEAD
         } else {
             res.render('login', { password: "wrong" });
+=======
+            }
+            else
+            { 
+                 console.log("wrong password")
+                res.render('login',{ password: "wrong password" });
+            }
+        } 
+        else
+         {
+            console.log("wrong username")
+          res.render('login',{ password: "wrong username" });
+>>>>>>> f65d1137ddd5b115b72187c56d6f43ed994dc41a
         }
-
-        console.log(">>>> ");
+ 
+         
+        console.log(">>>>");
     });
 
 });
