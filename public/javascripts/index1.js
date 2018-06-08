@@ -5,8 +5,10 @@ $(function() {
         url: '/news/approve',
         success: function(newslist) {
             console.log(newslist);
+
+
             $.each(newslist.docs, function(i, user) {
-                $newslist.append('<li><h3>' + user.title + '</h3><img src="' + user.path + '"/><p>' + user.description + '</p></li>')
+                $newslist.append('<li>' + user.title + ',' + user.path + '"/><p>' + user.description + '</p></li>')
             });
         }
     });
