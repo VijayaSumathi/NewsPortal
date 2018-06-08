@@ -9,7 +9,7 @@ function onAccept(id){
     type:"post",
     url:"http//localhost:3000/approval",
     data:id,
-    success:function(){
+    success:function(data){
       console.log("data")
     }
   })
