@@ -3,7 +3,6 @@
 //ourRequest.onload=function(){
 //console.log(ourRequest.responseText);
 //};
-<<<<<<< HEAD
 $(function() {
     var $newslist = $('#newslist');
     $.ajax({
@@ -12,25 +11,10 @@ $(function() {
         success: function(newslist) {
             console.log(newslist);
             $.each(newslist.docs, function(i, user) {
-                $newslist.append('<li>title:' + user.title + ',image:' + user.path + ',description:' + user.description + '</li>')
+                $newslist.append('<li><h3>' + user.title + '</h3><img src="' + user.path + '"/><p>' + user.description + '</p></li>')
             });
         }
     });
-=======
-$(function(){
-  var $newslist=$('#newslist');
-$.ajax({
-type:'GET',
-url:'/news/all',
-success:function(newslist){
-  console.log(newslist);
-  $.each(newslist.docs,function(i,user)
-  {
-   $newslist.append('<li><h3>'+user.title+'</h3><img src="'+user.path+'"/><p>'+user.description+'</p></li>') 
- });
-}
-});
->>>>>>> f65d1137ddd5b115b72187c56d6f43ed994dc41a
 
 });
 //$get
