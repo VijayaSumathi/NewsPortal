@@ -8,7 +8,9 @@ $(function() {
 
 
             $.each(newslist.docs, function(i, user) {
-                $newslist.append('<li>' + user.title + ',' + user.path + '"/><p>' + user.description + '</p></li>')
+                $newslist.append('<li><center><img  src="' + user.path + '"/></center><h1>' + user.title + '</h1><p style="font-size:24px">' + user.description + '</p></li>')
+
+
             });
         }
     });
