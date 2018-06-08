@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-           // path: res.req.file.filename
+            path:res.req.file.filename
 
         });
         news.save()
@@ -62,12 +62,12 @@ router.post('/uploadnews', function(req, res, next) {
                 //res.send(data);
             }).catch(err => {
                 res.status(500).send({
-                    message: err.message || "Some error occurred while creating the Note."
+                    message: err.message || "Some error occurred ."
                 });
                 console.log("error");
             });
-        res.render('index',{ news: news });
-        
+            res.render('index',{ upload: "news uploaded" });
+        console.log('news uploaded');
 
     });
 });
@@ -82,14 +82,26 @@ router.post('/login', function(req, res, next) {
     console.log(username);
     console.log(password);
 
-    login.find({ name: username }, function(err, data) {
-        if (password == data[0].password) {
+    login.find({}, function(err, data) {
+        if (username == data[0].name) {
+            if(password==data[0].password)
+            {
             res.redirect('/home');
-        } else {
-          res.render('login',{ password: "wrong" });
+            }
+            else
+            { 
+                 console.log("wrong password")
+                res.render('login',{ password: "wrong password" });
+            }
+        } 
+        else
+         {
+            console.log("wrong username")
+          res.render('login',{ password: "wrong username" });
         }
-
-        console.log(">>>> ");
+ 
+         
+        console.log(">>>>");
     });
 
 });
@@ -151,7 +163,15 @@ router.post('/approval', function(req, res, next) {
 
 });
 
+router.get('/news/approve', function(req, res, next) {
 
+  console.log("inside news approve");
+  approvednews.find({}, function(err, docs) {
+      if (err) { res.json(err); } else {
+          res.json({ docs: docs });
+      }
+  });
+});
 
 
 module.exports = router;
