@@ -2,20 +2,18 @@ var router = express.Router();
 
 var fs = require('fs')
 
-$.get("/admin", function(data, ) {
-    for (i = 0; i < mystring.obj.length; i++) {
+$(function() {
+    var $newslist = $('approved');
+    $.ajax({
+        type: 'GET',
+        url: '/news/approve',
+        success: function(newslist) {
+            console.log(newslist);
 
-        var mystring = ['<li>',
-            '<h3>' + obj.title + '</h3>',
-            '<img>' + obj.imageurl + '</img>',
-            '<p>' + obj.description + '</p>',
-            '</li>'
-        ].join('');
+            $.each(newslist.docs, function(i, user) {
+                $three.append('<li>title:' + user.title + ',image:' + user.path + ',description:' + user.description + '</li>')
+            });
+        }
+    });
 
-        $('#newlist').append(mystring)
-    }
-    $.each(data, function(index, value) {
-        $("#result").append(index + ": " + value + '<br>');
-        $('#newlist').append(mystring)
-    })
-})
+});

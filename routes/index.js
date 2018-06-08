@@ -24,7 +24,7 @@ router.get('/third', function(req, res, next) {
     res.render('three');
 });
 router.get('/login', function(req, res, next) {
-  res.render('login');
+    res.render('login');
 });
 
 router.get('/last', function(req, res, next) {
@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path: __dirname + '/../public/images/'+res.req.file.filename
+            path: __dirname + '/../public/images/' + res.req.file.filename
 
         });
         news.save()
@@ -66,14 +66,14 @@ router.post('/uploadnews', function(req, res, next) {
                 });
                 console.log("error");
             });
-       // res.render('index',{ news: news });
+        // res.render('index',{ news: news });
         console.log('news uploaded');
 
     });
 });
 
-router.get('/home', function(req,res, next){
-  res.render('approve');
+router.get('/home', function(req, res, next) {
+    res.render('approve');
 });
 router.post('/login', function(req, res, next) {
     var username = req.body.name;
@@ -86,7 +86,7 @@ router.post('/login', function(req, res, next) {
         if (password == data[0].password) {
             res.redirect('/home');
         } else {
-          res.render('login',{ password: "wrong" });
+            res.render('login', { password: "wrong" });
         }
 
         console.log(">>>> ");
@@ -153,12 +153,12 @@ router.post('/approval', function(req, res, next) {
 
 router.get('/news/approve', function(req, res, next) {
 
-  console.log("inside news approve");
-  approvednews.find({}, function(err, docs) {
-      if (err) { res.json(err); } else {
-          res.json({ docs: docs });
-      }
-  });
+    console.log("inside news approve");
+    approvednews.find({}, function(err, docs) {
+        if (err) { res.json(err); } else {
+            res.json({ docs: docs });
+        }
+    });
 });
 
 
