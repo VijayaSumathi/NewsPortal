@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:'http://localhost:3000/images/'+res.req.file.filename
+            path:'/images/'+res.req.file.filename
 
         });
         news.save()
