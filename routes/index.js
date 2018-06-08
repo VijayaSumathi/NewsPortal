@@ -24,7 +24,7 @@ router.get('/third', function(req, res, next) {
     res.render('three');
 });
 router.get('/login', function(req, res, next) {
-  res.render('login');
+    res.render('login');
 });
 
 router.get('/last', function(req, res, next) {
@@ -53,7 +53,17 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:'/../public/images/'+res.req.file.filename
+            <<
+            <<
+            <<
+            < HEAD
+            path: __dirname + '/../public/images/' + res.req.file.filename ===
+                ===
+                =
+                path: '/../public/images/' + res.req.file.filename >>>
+                >>>
+                >
+                f65d1137ddd5b115b72187c56d6f43ed994dc41a
 
         });
         news.save()
@@ -65,15 +75,25 @@ router.post('/uploadnews', function(req, res, next) {
                     message: err.message || "Some error occurred ."
                 });
                 console.log("error");
-            });
-            res.render('index',{ upload: "news uploaded" });
+            }); <<
+        <<
+        <<
+        < HEAD
+        // res.render('index',{ news: news });
+            ===
+            ===
+            =
+            res.render('index', { upload: "news uploaded" }); >>>
+        >>>
+        >
+        f65d1137ddd5b115b72187c56d6f43ed994dc41a
         console.log('news uploaded');
 
     });
 });
 
-router.get('/home', function(req,res, next){
-  res.render('approve');
+router.get('/home', function(req, res, next) {
+    res.render('approve');
 });
 
 
@@ -86,23 +106,28 @@ router.post('/login', function(req, res, next) {
 
     login.find({}, function(err, data) {
         if (username == data[0].name) {
-            if(password==data[0].password)
-            {
-            res.redirect('/home');
+            if (password == data[0].password) {
+                res.redirect('/home'); <<
+                <<
+                <<
+                < HEAD
+            } else {
+                res.render('login', { password: "wrong" }); ===
+                ===
+                =
+            } else {
+                console.log("wrong password")
+                res.render('login', { password: "wrong password" });
             }
-            else
-            { 
-                 console.log("wrong password")
-                res.render('login',{ password: "wrong password" });
-            }
-        } 
-        else
-         {
+        } else {
             console.log("wrong username")
-          res.render('login',{ password: "wrong username" });
+            res.render('login', { password: "wrong username" }); >>>
+            >>>
+            >
+            f65d1137ddd5b115b72187c56d6f43ed994dc41a
         }
- 
-         
+
+
         console.log(">>>>");
     });
 
@@ -167,12 +192,12 @@ router.post('/approval', function(req, res, next) {
 
 router.get('/news/approve', function(req, res, next) {
 
-  console.log("inside news approve");
-  approvednews.find({}, function(err, docs) {
-      if (err) { res.json(err); } else {
-          res.json({ docs: docs });
-      }
-  });
+    console.log("inside news approve");
+    approvednews.find({}, function(err, docs) {
+        if (err) { res.json(err); } else {
+            res.json({ docs: docs });
+        }
+    });
 });
 
 
