@@ -1,0 +1,23 @@
+body{
+    background:gainsboro;
+}
+.head{ padding-top: 0px;
+    padding-right:50px;
+    padding-bottom:20px;
+    padding-left: 40px;
+    text-align: center;
+    }
+.A{
+    overflow: hidden;
+     background-color:lightskyblue;
+     position:relative;
+     width: 100%;
+     padding-left:0px;
+     max-height:50px;
+    }
+     .content {
+        max-width: 500px;
+        margin: auto;
+        background: white;
+        padding: 10px;
+        }
