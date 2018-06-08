@@ -1,5 +1,10 @@
 body{
     background:gainsboro;
+}.content {
+    max-width: 500px;
+    margin: auto;
+    background: white;
+    padding-right: 10px;
 }
 .head{ padding-top: 0px;
     padding-right:50px;
@@ -7,12 +12,16 @@ body{
     padding-left: 40px;
     text-align: center;
     }
+    img{
+        width:98%;
+        height:80%;
+        }
 .A{
     overflow: hidden;
      background-color:lightskyblue;
      position:relative;
      width: 100%;
-     padding-left:0px;
+     padding-right:0px;
      max-height:50px;
     }
      .content {
@@ -20,4 +29,5 @@ body{
         margin: auto;
         background: white;
         padding: 10px;
+        padding-right:10px;
         }
