@@ -111,7 +111,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all', function(req, res, next) {
+router.get('/news/all', function(req, res, next){
 
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
