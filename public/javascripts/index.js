@@ -6,11 +6,12 @@
 function onAccept(id){
   console.log(id);
   $.ajax({
-    type:"post",
-    url:"http//localhost:3000/approval",
+    type:'post',
+    url:'/approval',
     data:id,
     success:function(){
-      console.log("data")
+      console.log("data");
+      $id=id;
     }
   })
 }
@@ -23,7 +24,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="'+user.path+'"/><p>'+user.description+'</p> <button name="status" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button> &nbsp;&nbsp;&nbsp; <button>Reject</button></li>') 
+      $newslist.append('<li><h3>'+user.title+'</h3><img src="'+user.path+'"/><p>'+user.description+'</p> <button name="status" id="click"  value="accept" onclick="onAccept(\''+user._id+'\')"  >Approve</button> &nbsp;&nbsp;&nbsp; <button name="status" id="click"  value="reject" onclick="onAccept(\''+user._id+'\')"  >Reject</button></li>') 
     });
   }
   });

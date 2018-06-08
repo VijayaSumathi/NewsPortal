@@ -35,6 +35,7 @@ router.get('/last', function(req, res, next) {
 
 
 router.post('/uploadnews', function(req, res, next) {
+     console.log(pic);
 
     const storageEngine = multer.diskStorage({
         destination: __dirname + '/../public/images/',
@@ -124,6 +125,8 @@ router.get('/news/all', function(req, res, next){
 router.post('/approval', function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body.id;
+    console.log(status1)
+    console.log(id1)
     if (status1.toLowerCase() == "accept")
     {
         uploadmynew.find({ _id: id1 }, function(err, data) {
