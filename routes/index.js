@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:res.req.file.filename
+            path: __dirname + '/../public/images/'+res.req.file.filename
 
         });
         news.save()
@@ -75,6 +75,8 @@ router.post('/uploadnews', function(req, res, next) {
 router.get('/home', function(req,res, next){
   res.render('approve');
 });
+
+
 router.post('/login', function(req, res, next) {
     var username = req.body.name;
     var password = req.body.pass;
