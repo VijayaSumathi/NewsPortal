@@ -7,7 +7,7 @@ const multer = require('multer');
 const path = require('path');
 var newsrejected = require('../models/rejectednews');
 
-router.get('/', function(req, res, next){
+router.get('/', function(req, res, next) {
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -111,7 +111,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all', function(req, res, next){
+router.get('/news/all', function(req, res, next) {
 
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
