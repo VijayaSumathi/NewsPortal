@@ -7,7 +7,7 @@ const multer = require('multer');
 const path = require('path');
 var newsrejected = require('../models/rejectednews');
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, next){
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -53,7 +53,7 @@ router.post('/uploadnews', function(req, res, next) {
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:'/images/'+res.req.file.filename
+            path:'http://localhost:3000/images/'+res.req.file.filename
 
         });
         news.save()
@@ -111,8 +111,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all', function(req, res, next) {
-
+router.get('/news/all', function(req, res, next){
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -121,9 +120,12 @@ router.get('/news/all', function(req, res, next) {
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/approval1', function(req, res, next) {
     var status1 = req.body.status;
-    var id1 = req.body.id;
+    var id1 = req.body._id;
+    console.log(req.body);
+    console.log(req.body.status)
+   // var status1 = "accept";
     if (status1.toLowerCase() == "accept")
     {
         uploadmynew.find({ _id: id1 }, function(err, data) {
@@ -155,7 +157,9 @@ router.post('/approval', function(req, res, next) {
 
   
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
-            console.log("This object will get deleted " + data);
+            console.log("news rejected " + data);
+            res.json(data);
+           /*
             if (error) 
             { 
                 res.json(error); 
@@ -174,8 +178,9 @@ router.post('/approval', function(req, res, next) {
                 });
             console.log("This object will get deleted " + data);
             data.remove();
-            
-         }
+            }
+            */
+         
         });
         
     }
