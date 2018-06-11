@@ -165,9 +165,7 @@ router.post('/approval', function(req, res, next) {
        
     } 
     else if(status1.toLowerCase() == "delete")
-    {
-
-  
+    {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("news deleted " + data);
             data.remove();
@@ -175,7 +173,11 @@ router.post('/approval', function(req, res, next) {
         });
         
     }
-    //res.redirect('/indexhome');
+    else
+    {
+        console.log("news rejected ");
+    }
+   
 });
 
 router.get('/news/approve', function(req, res, next) {
