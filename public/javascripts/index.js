@@ -26,5 +26,6 @@ $(function(){
       {
       $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button>Reject</button></li>') 
     });
-
+  }
+});
 });
