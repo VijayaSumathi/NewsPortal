@@ -8,7 +8,7 @@ function onAccept(id){
   $.ajax({
     type:"POST",
     url:'/approval1',
-    data:{_id : id},
+    data:{_id : id, status:"accept"},
     datatype:"json",
     success:function(data){
       console.log("Succes");
@@ -24,7 +24,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="'+user.path+'"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button>Reject</button></li>') 
+      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button>Reject</button></li>') 
     });
   }
   });
