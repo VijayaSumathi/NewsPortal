@@ -131,8 +131,6 @@ router.post('/approval1', function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
-    console.log(req.body.status)
-    var status1 = "accept";
     if (status1.toLowerCase() == "accept")
     {
         uploadmynew.find({ _id: id1 }, function(err, data) {
