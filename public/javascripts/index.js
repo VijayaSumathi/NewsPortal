@@ -7,7 +7,7 @@ function onAccept(id){
   console.log("id",id);
   $.ajax({
     type:"POST",
-    url:'/approval1',
+    url:'/approval',
     data:{_id : id, status:"accept"},
     datatype:"json",
     success:function(data){

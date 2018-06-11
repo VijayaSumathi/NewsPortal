@@ -36,7 +36,7 @@ router.get('/last', function(req, res, next) {
 
 router.post('/uploadnews', function(req, res, next) {   
     
-   // if(0 && typeof req.body.pic === "undefined")
+  
         const storageEngine = multer.diskStorage({
             destination: __dirname + '/../public/images/',
             filename: function(req, file, fn) {
@@ -127,7 +127,7 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval1', function(req, res, next) {
+router.post('/approval', function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
