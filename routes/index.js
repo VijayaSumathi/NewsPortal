@@ -34,8 +34,28 @@ router.get('/last', function(req, res, next) {
 
 
 
-router.post('/uploadnews', function(req, res, next) {
+router.post('/uploadnews', function(req, res, next) {   
+    
+if(!req.body.pic)
+   {
+     const news = new uploadmynew({
+        title: req.body.title,
+        description: req.body.description,
+    });
+     news.save()
+            .then(data => {
+                console.log('news uploaded');            
+                
+            }).catch(err => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred ."
+                });
+                console.log("error");
+            });
+            res.render('index',{ upload: "news uploaded" });
+  }
 
+ 
     const storageEngine = multer.diskStorage({
         destination: __dirname + '/../public/images/',
         filename: function(req, file, fn) {
@@ -47,29 +67,34 @@ router.post('/uploadnews', function(req, res, next) {
     const upload = multer({
         storage: storageEngine
     }).single('pic');
-
+    
+  
     upload(req, res, function(err, result) {
-
         const news = new uploadmynew({
             title: req.body.title,
             description: req.body.description,
-            path:'http://localhost:3000/images/'+res.req.file.filename
-
+           
+             path:'http://localhost:3000/images/'+res.req.file.filename          
+            
+        
         });
         news.save()
             .then(data => {
-                console.log("inserted");
-                //res.send(data);
+                console.log('news uploaded');
+
+             
+                
             }).catch(err => {
                 res.status(500).send({
                     message: err.message || "Some error occurred ."
                 });
                 console.log("error");
             });
-            res.render('index',{ upload: "news uploaded" });
-        console.log('news uploaded');
+      });
 
-    });
+  
+    res.render('index',{ upload: "news uploaded" });
+    
 });
 
 router.get('/home', function(req,res, next){
@@ -112,7 +137,6 @@ router.post('/login', function(req, res, next) {
 
 
 router.get('/news/all', function(req, res, next){
-
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -121,9 +145,12 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/approval1', function(req, res, next) {
     var status1 = req.body.status;
-    var id1 = req.body.id;
+    var id1 = req.body._id;
+    console.log(req.body);
+    console.log(req.body.status)
+    var status1 = "accept";
     if (status1.toLowerCase() == "accept")
     {
         uploadmynew.find({ _id: id1 }, function(err, data) {
