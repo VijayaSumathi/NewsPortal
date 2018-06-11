@@ -2,7 +2,7 @@ $(function() {
     var $newslist = $('#approved');
     $.ajax({
         type: 'GET',
-        url: '/news/all',
+        url: '/news/approve',
         success: function(newslist) {
             console.log(newslist);
 

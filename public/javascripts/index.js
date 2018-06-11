@@ -15,6 +15,19 @@ function onAccept(id){
     }
   })
 }
+function onReject(id){
+  console.log("id",id);
+  $.ajax({
+    type:"POST",
+    url:'/approval',
+    data:{_id : id, status:"reject"},
+    datatype:"json",
+    success:function(data){
+      console.log("Succes");
+    }
+  })
+}
+
 $(function(){
   var $newslist=$('#newslist');
   $.ajax( {
@@ -24,7 +37,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button>Reject</button></li>') 
+      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button name="status" value="reject" id="click" onclick="onReject(\''+user._id+'\')"  >Reject</button></li>') 
     });
   }
 });

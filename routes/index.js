@@ -137,7 +137,8 @@ router.post('/approval', function(req, res, next) {
             if (err) { res.json(err); } else {
                 const approvenews = new approvednews({
                     title: data[0].title,
-                    description: data[0].description
+                    description: data[0].description,
+                    path:data[0].path
                 });
                 approvenews.save(function(err) {
                     console.log("inserted");
