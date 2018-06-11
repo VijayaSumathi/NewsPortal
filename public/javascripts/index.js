@@ -9,7 +9,7 @@ function onAccept(id){
     type:'post',
     url:'/approval',
     data:id,
-    success:function(){
+    success:function(id){
       console.log("data");
       $id=id;
     }
