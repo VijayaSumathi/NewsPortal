@@ -119,7 +119,6 @@ router.post('/login', function(req, res, next) {
 
 
 router.get('/news/all', function(req, res, next){
-
     console.log("inside approve");
     uploadmynew.find({}, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -128,11 +127,12 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/approval1', function(req, res, next) {
     var status1 = req.body.status;
-    var id1 = req.body.id;
-    console.log(status1)
-    console.log(id1)
+    var id1 = req.body._id;
+    console.log(req.body);
+    console.log(req.body.status)
+    var status1 = "accept";
     if (status1.toLowerCase() == "accept")
     {
         uploadmynew.find({ _id: id1 }, function(err, data) {

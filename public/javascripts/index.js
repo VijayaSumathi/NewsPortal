@@ -4,27 +4,27 @@
 //console.log(ourRequest.responseText);
 //};
 function onAccept(id){
-  console.log(id);
+  console.log("id",id);
   $.ajax({
-    type:'post',
-    url:'/approval',
-    data:id,
-    success:function(id){
-      console.log("data");
-      $id=id;
+    type:"POST",
+    url:'/approval1',
+    data:{_id : id, status:"accept"},
+    datatype:"json",
+    success:function(data){
+      console.log("Succes");
     }
   })
 }
 $(function(){
   var $newslist=$('#newslist');
-  $.ajax({
+  $.ajax( {
     type:'GET',
     url:'/news/all',
     success:function(newslist){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="'+user.path+'"/><p>'+user.description+'</p> <button name="status" id="click"  value="accept" onclick="onAccept(\''+user._id+'\')"  >Approve</button> &nbsp;&nbsp;&nbsp; <button name="status" id="click"  value="reject" onclick="onAccept(\''+user._id+'\')"  >Reject</button></li>') 
+      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button>Reject</button></li>') 
     });
   }
   });
