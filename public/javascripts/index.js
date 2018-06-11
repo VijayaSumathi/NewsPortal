@@ -11,7 +11,7 @@ function onAccept(id){
     data:{_id : id, status:"accept"},
     datatype:"json",
     success:function(data){
-      console.log("Succes");
+      console.log("onAccept Succes");
     }
   })
 }
@@ -23,7 +23,19 @@ function onReject(id){
     data:{_id : id, status:"reject"},
     datatype:"json",
     success:function(data){
-      console.log("Succes");
+      console.log("onReject Succes");
+    }
+  })
+}
+function onDelete(id){
+  console.log("id",id);
+  $.ajax({
+    type:"POST",
+    url:'/approval',
+    data:{_id : id, status:"delete"},
+    datatype:"json",
+    success:function(data){
+      console.log("onDelete Succes");
     }
   })
 }
@@ -37,7 +49,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button name="status" value="reject" id="click" onclick="onReject(\''+user._id+'\')"  >Reject</button></li>') 
+      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button name="status" value="reject" id="click" onclick="onReject(\''+user._id+'\')"  >Reject</button>       <button name="status" value="delete" id="click" onclick="onDelete(\''+user._id+'\')"  >Delete</button>  </li>') 
     });
   }
 });
