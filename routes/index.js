@@ -82,6 +82,9 @@ router.post('/uploadnews', function(req, res, next) {
 router.get('/home', function(req,res, next){
   res.render('approve');
 });
+router.get('/indexhome', function(req,res, next){
+    res.render('index');
+  });
 
 
 router.post('/login', function(req, res, next) {
@@ -147,29 +150,32 @@ router.post('/approval', function(req, res, next) {
 
                 });
 
-                res.json(data);
+                //res.json(data);
 
 
             }
+           
         });
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("This object will get deleted " + data);
             data.remove();
 
         });
-
+       // res.redirect('/indexhome');
+       
     } 
-    else if(status1.toLowerCase() == "accept")
+    else if(status1.toLowerCase() == "delete")
     {
 
   
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
-            console.log("news rejected " + data);
-            res.json(data);                   
+            console.log("news deleted " + data);
+            data.remove();
+               
         });
         
     }
-
+    //res.redirect('/indexhome');
 });
 
 router.get('/news/approve', function(req, res, next) {
