@@ -1,43 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var uploadmynew = require('../models/uploadNews');
+var uploadmynew = require('../models/Mynews');
 var User = require('../models/adminlogin');
-var approvednews = require('../models/adminapprove');
+
 const multer = require('multer');
 const path = require('path');
-var newsrejected = require('../models/rejectednews');
+
 var bcrypt = require('bcrypt');
 var SALT_WORK_FACTOR = 10;
+var jwt = require('jsonwebtoken');
 
-router.get('/', function(req, res, next){
-    
-     /* Encrypt password */
-  
-    mySchema.pre('save', function(next){
-        var user = this;
-        if (!user.isModified('password')) return next();
-    
-        bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
-            if(err) return next(err);
-    
-            bcrypt.hash(user.password, salt, function(err, hash){
-                if(err) return next(err);
-    
-                user.password = hash;
-                next();
-            });
-        });
-    });
-    var testdata = new  User({
-        username: "admin",
-        password: "test123"
-    });
-    
-    testdata.save(function(err, data){
-        if(err) console.log(error);
-        else console.log ('Success:' , data);
-    });
-
+router.get('/', function(req, res, next){  
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -60,12 +33,20 @@ router.get('/login', function(req, res, next) {
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
+router.get('/home', function(req,res, next){
+   
+    res.render('approve');
+});
+  
+router.get('/indexhome', function(req,res, next){
+      res.render('index');
+});
+  
+  
 
 
 
-
-router.post('/uploadnews', function(req, res, next) {   
-    
+router.post('/uploadnews', function(req, res, next) {       
   
         const storageEngine = multer.diskStorage({
             destination: __dirname + '/../public/images/',
@@ -91,12 +72,12 @@ router.post('/uploadnews', function(req, res, next) {
             const news = new uploadmynew({
                 title: req.body.title,
                 description: req.body.description,               
-                 path: a          
-            
+                 path: a,          
+                 status:"fresh"
             }); 
             news.save()
             .then(data => {
-                console.log("inserted");
+                console.log("News successfully uploaded");
                 //res.send(data);
             }).catch(err => {
                 res.status(500).send({
@@ -110,27 +91,48 @@ router.post('/uploadnews', function(req, res, next) {
     
 });
 
-router.get('/home', function(req,res, next){
-  res.render('approve');
-});
 
-router.get('/indexhome', function(req,res, next){
-    res.render('index');
-  });
+router.post('/login', function(req, res, next) { 
+    
+    User.findOne({username:req.body.username},function(err,user){
+       if(err)
+       {
+           return res.send(401);
+       }
 
+        if(!user)
+             {
+                     console.log("Incorrect username");
+                    res.render('login',{ "Username": "wrong username" });
+             }
+        if(user.password==req.body.password  )
+        {         
+            res.json({"ok":"ok"});            
+        }
+        else{
+        res.json({"ok":"wrong password"})
+       
+        }       
+    });
 
-router.post('/login', function(req, res, next) {
-    var username = req.body.name;
-    var password = req.body.pass;
+/*
+    var username = req.body.username;
+    var password = req.body.password;
 
     console.log(username);
     console.log(password);
 
-    login.find({}, function(err, data) {
-        if (username == data[0].name) {
+    User.find({}, function(err, data) {
+    console.log(data)
+        if (username == data[0].username) {
             if(password==data[0].password)
             {
-            res.redirect('/home');
+                jwt.sign({username:data},'secretkey',(err,token)=>{
+                    //res.json({token:token})
+            
+            });
+                console.log("correct");
+                res.redirect('/home'); 
             }
             else
             { 
@@ -143,11 +145,11 @@ router.post('/login', function(req, res, next) {
             console.log("wrong username")
           res.render('login',{ password: "wrong username" });
         }
- 
+        
          
         console.log(">>>>");
     });
-
+*/
 });
 
 
@@ -155,7 +157,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/news/all', function(req, res, next){
     console.log("inside approve");
-    uploadmynew.find({}, function(err, docs) {
+    uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
         if (err) { res.json(err); } else {
             res.json({ docs: docs });
         }
@@ -167,24 +169,12 @@ router.post('/approval', function(req, res, next) {
     var id1 = req.body._id;
     console.log(req.body);
     if (status1.toLowerCase() == "accept")
-    {
-        uploadmynew.find({ _id: id1 }, function(err, data) {
-            if (err) { res.json(err); } else {
-                const approvenews = new approvednews({
-                    title: data[0].title,
-                    description: data[0].description,
-                    path:data[0].path
-                });
-                approvenews.save(function(err) {
-                    console.log("inserted");
-                    if (err)
-                        console.error(err);
-                });            
-
-
-            }
-           
-        });
+    {                                 
+                
+                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+                    if (err) throw err;
+                    console.log("1 document updated");                  
+                });                
        
             
     } 
@@ -197,8 +187,12 @@ router.post('/approval', function(req, res, next) {
         });
         
     }
-    else
-    {
+    else if(status1.toLowerCase() == "reject")
+    {   
+        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+            if (err) throw err;
+            console.log("1 document updated");                  
+        });   
         console.log("news rejected ");
     }
    
@@ -206,8 +200,7 @@ router.post('/approval', function(req, res, next) {
 
 router.get('/news/approve', function(req, res, next) {
 
-  console.log("inside news approve");
-  approvednews.find({}, function(err, docs) {
+    uploadmynew.find({"status":"accept"}, function(err, docs) {
       if (err) { res.json(err); } else {
           res.json({ docs: docs });
       }
@@ -218,6 +211,23 @@ router.get('/news/approve', function(req, res, next) {
 /* save password */
 
 
+function verifyToken(req,res,next) {
+    //get auth val
+     const  bearerHeader = req.headers['authorization'];
+     //check if bearer is undefined
+     if(typeof bearerHeader!== "undefined")
+     {
+           const bearer = bearerHeader.split(' ');
+           //get token from array
+           const bearerToken =bearer[1];
+           req.token=bearerToken;
+           next();
+     }
+     else{
+         //forbidden
+         res.sendStatus(403);
+     }
+}
 
 
 module.exports = router;
