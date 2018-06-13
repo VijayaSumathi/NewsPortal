@@ -1,13 +1,43 @@
 var express = require('express');
 var router = express.Router();
 var uploadmynew = require('../models/uploadNews');
-var login = require('../models/adminlogin');
+var User = require('../models/adminlogin');
 var approvednews = require('../models/adminapprove');
 const multer = require('multer');
 const path = require('path');
 var newsrejected = require('../models/rejectednews');
+var bcrypt = require('bcrypt');
+var SALT_WORK_FACTOR = 10;
 
 router.get('/', function(req, res, next){
+    
+     /* Encrypt password */
+  
+    mySchema.pre('save', function(next){
+        var user = this;
+        if (!user.isModified('password')) return next();
+    
+        bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt){
+            if(err) return next(err);
+    
+            bcrypt.hash(user.password, salt, function(err, hash){
+                if(err) return next(err);
+    
+                user.password = hash;
+                next();
+            });
+        });
+    });
+    var testdata = new  User({
+        username: "admin",
+        password: "test123"
+    });
+    
+    testdata.save(function(err, data){
+        if(err) console.log(error);
+        else console.log ('Success:' , data);
+    });
+
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -57,6 +87,7 @@ router.post('/uploadnews', function(req, res, next) {
             {
                 a='http://localhost:3000/images/'+res.req.file.filename
             }
+
             const news = new uploadmynew({
                 title: req.body.title,
                 description: req.body.description,               
@@ -82,6 +113,7 @@ router.post('/uploadnews', function(req, res, next) {
 router.get('/home', function(req,res, next){
   res.render('approve');
 });
+
 router.get('/indexhome', function(req,res, next){
     res.render('index');
   });
@@ -147,7 +179,6 @@ router.post('/approval', function(req, res, next) {
                     console.log("inserted");
                     if (err)
                         console.error(err);
-
                 });            
 
 
@@ -182,6 +213,9 @@ router.get('/news/approve', function(req, res, next) {
       }
   });
 });
+
+
+/* save password */
 
 
 

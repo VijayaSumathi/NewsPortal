@@ -1,7 +1,15 @@
 var mongoose = require('mongoose');
 var LoginSchema = new mongoose.Schema({
-    name: String,
-    password: String,
+  username:{
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+   created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
   });
-  module.exports = mongoose.model('LOGIN', LoginSchema);
+  module.exports = mongoose.model('adminlogin', LoginSchema,'adminlogin');
