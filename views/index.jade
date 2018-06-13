@@ -1,9 +1,12 @@
 extends layout1
 block content
   .content
-    h1.head MyNews
-    h2
-       a(href='/index') Upload Your News
+   h1.head MyNews
+   .header
+     
+    div.container
+      a(href='/index') Upload Your News
+       
     .userlist-wrapper
       ul#approved
     script(src="/javascripts/index1.js")

@@ -57,6 +57,7 @@ router.post('/uploadnews', function(req, res, next) {
             {
                 a='http://localhost:3000/images/'+res.req.file.filename
             }
+
             const news = new uploadmynew({
                 title: req.body.title,
                 description: req.body.description,               
@@ -82,6 +83,7 @@ router.post('/uploadnews', function(req, res, next) {
 router.get('/home', function(req,res, next){
   res.render('approve');
 });
+
 router.get('/indexhome', function(req,res, next){
     res.render('index');
   });
@@ -147,7 +149,6 @@ router.post('/approval', function(req, res, next) {
                     console.log("inserted");
                     if (err)
                         console.error(err);
-
                 });            
 
 
@@ -182,6 +183,7 @@ router.get('/news/approve', function(req, res, next) {
       }
   });
 });
+
 
 
 
