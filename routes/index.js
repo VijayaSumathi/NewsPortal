@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var uploadmynew = require('../models/Mynews');
 var User = require('../models/adminlogin');
-
+var jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 
-var bcrypt = require('bcrypt');
-var SALT_WORK_FACTOR = 10;
-var jwt = require('jsonwebtoken');
+
+
+
+
 
 router.get('/', function(req, res, next){  
     res.render('index', { title: 'index' });
@@ -106,12 +107,24 @@ router.post('/login', function(req, res, next) {
                     res.render('login',{ "Username": "wrong username" });
              }
         if(user.password==req.body.password  )
-        {         
-            res.json({"ok":"ok"});            
+        {     
+            const jwttoken = jwt.sign(
+                {  username: req.body.username ,
+                   password:req.body.password 
+                },
+                'secret',{
+                    expiresIn : '2h'
+                });    
+
+                return res.status(200).json({
+                    success: 'Welcome to the JWT Auth',
+                    token: jwttoken
+                  });
+                    
         }
-        else{
-        res.json({"ok":"wrong password"})
-       
+        else
+        {
+        res.json({"ok":"wrong password"})       
         }       
     });
 
