@@ -194,9 +194,10 @@ router.post('/approval', function(req, res, next) {
     if (status1.toLowerCase() == "accept")
     {                                 
                 
-                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
-                    console.log("1 document updated");                  
+                    console.log("1 document updated");    
+                    res.json({ message: result });              
                 });                
        
             
