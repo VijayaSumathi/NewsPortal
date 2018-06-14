@@ -7,6 +7,7 @@ const multer = require('multer');
 const path = require('path');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
+var fs = require('fs');
 
 router.use(session({
     cookieName: 'session',
@@ -162,18 +163,15 @@ router.post('/login', function(req, res, next) {
                      console.log("Incorrect username");
                      res.render('login',{message:"Authentication failed, Wrong Username"});
              }
-             else{
-
-             
-           
+             else
+             {            
              
             bcrypt.compare(req.body.password, user.password, function(err, result) {
                 console.log(res);
                 if(result)
                 {
                     req.session.user = user;
-                    res.redirect('/home') 
-               
+                    res.redirect('/home')                
                }
                else
                {
@@ -184,8 +182,6 @@ router.post('/login', function(req, res, next) {
             });
         }
     });
-  
-   
            
 });
 
@@ -221,7 +217,17 @@ router.post('/approval',verifySession, function(req, res, next) {
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("news deleted " + data+"the image deleted"+ data.path);
-             data.path
+            
+            const file=  path.basename(data.path);
+            console.log(file)
+              //delete photo
+              fs.unlink( __dirname + '/../public/images/'+file, function(error) {
+                if (error) {
+                    throw error;
+                }
+                console.log('Deleted !!');
+            });
+                 
             data.remove();
             res.json({ message: data._id });    
         });
