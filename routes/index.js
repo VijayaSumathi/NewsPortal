@@ -168,15 +168,7 @@ router.post('/login', function(req, res, next) {
                }
                 
             });
-    /*  if(match=="true")
-      {
-        req.session.user = user;
-        res.redirect('/home') 
-      }
-      else if(match=="false"){
-        res.json({message:"Authentication failed. Wrong password"});
-      }
-  */        
+         
     });
   
    
