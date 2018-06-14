@@ -157,11 +157,14 @@ router.post('/login', function(req, res, next) {
            return res.send(401);
        }
 
-        if(!user)
+          if(!user)
              {
                      console.log("Incorrect username");
                      res.json({message:"Authentication failed. Wrong password"});
              }
+             else{
+
+             
            
              
             bcrypt.compare(req.body.password, user.password, function(err, result) {
@@ -180,7 +183,7 @@ router.post('/login', function(req, res, next) {
                }
                 
             });
-         
+        }
     });
   
    
