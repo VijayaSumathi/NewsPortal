@@ -118,34 +118,38 @@ router.get('/indexhome', function(req,res, next){
     res.render('index');
   });
 
-
-router.post('/login', function(req, res, next) {
-    var username = req.body.name;
-    var password = req.body.pass;
-
-    console.log(username);
-    console.log(password);
-
-    login.find({}, function(err, data) {
-        if (username == data[0].name) {
-            if(password==data[0].password)
-            {
-            res.redirect('/home');
-            }
-            else
-            { 
-                 console.log("wrong password")
-                res.render('login',{ password: "wrong password" });
-            }
-        } 
-        else
-         {
-            console.log("wrong username")
-          res.render('login',{ password: "wrong username" });
-        }
- 
-         
-        console.log(">>>>");
+        if(!user)
+             {
+                     console.log("Incorrect username");
+                    res.render('login',{ message: "Authentication failed. User not found." });
+             }
+           
+             
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
+                console.log(res);
+                if(result)
+                {
+                    req.session.user = user;
+                    res.redirect('/home') 
+               
+               }
+               else
+               {
+                match=="false"
+                
+                res.json({message:"Authentication failed. Wrong password"});
+               }
+                
+            });
+    /*  if(match=="true")
+      {
+        req.session.user = user;
+        res.redirect('/home') 
+      }
+      else if(match=="false"){
+        res.json({message:"Authentication failed. Wrong password"});
+      }
+  */        
     });
 
 });
