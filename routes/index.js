@@ -229,12 +229,24 @@ router.post('/approval',verifySession, function(req, res, next) {
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
-            if (err) throw err;
-            console.log("1 document updated");    
-            res.json({ message: result._id });                 
-        });   
-        console.log("news rejected ");
+        uploadmynew.findOne({}, function(error, data) {
+            console.log("the status " + data.status);
+            if(data.status=="accept")
+            {
+                res.json({ message: "Cant reject approved news"});  
+            }
+            else{
+                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
+                    if (err) throw err;
+                    console.log("1 document updated");    
+                    res.json({ message: result._id });                 
+                });   
+                console.log("news rejected ");
+            }
+              
+        });
+
+       
     }
    
 });
