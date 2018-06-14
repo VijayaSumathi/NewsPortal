@@ -116,9 +116,9 @@ html
         input(type='password', title='username', placeholder='password', name='password')
         input(type='submit', value='Submit') 
         a.forgot(href='#') Forgot Username?
-        if password
+        if message
           p 
-          |error
+          |#{message}
         
 
         
