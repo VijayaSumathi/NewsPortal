@@ -38,7 +38,7 @@ router.get('/third', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
-
+// middleware
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
@@ -168,15 +168,7 @@ router.post('/login', function(req, res, next) {
                }
                 
             });
-    /*  if(match=="true")
-      {
-        req.session.user = user;
-        res.redirect('/home') 
-      }
-      else if(match=="false"){
-        res.json({message:"Authentication failed. Wrong password"});
-      }
-  */        
+         
     });
   
    
@@ -202,9 +194,10 @@ router.post('/approval', function(req, res, next) {
     if (status1.toLowerCase() == "accept")
     {                                 
                 
-                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
-                    console.log("1 document updated");                  
+                    console.log("1 document updated");    
+                    res.json({ message: result });              
                 });                
        
             
