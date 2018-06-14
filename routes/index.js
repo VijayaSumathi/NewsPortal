@@ -25,7 +25,7 @@ router.get('/', function(req, res, next){
 router.get('/index', function(req, res, next) {
     res.render('upload');
 });
-
+/*
 router.get('/first', function(req, res, next) {
     res.render('one');
 });
@@ -34,7 +34,7 @@ router.get('/second', function(req, res, next) {
 });
 router.get('/third', function(req, res, next) {
     res.render('three');
-});
+});*/
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
@@ -42,51 +42,54 @@ router.get('/login', function(req, res, next) {
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
-/*
-var a = funtion(req,res,next){
-    //if valid
-    next();
-    //failed val
-    res.render('err');
 
-}
-*/
-router.get('/home',a , function(req,res, next){
+function verifySession(req,res,next)
+ {
     
-    if (req.session && req.session.user) {
-         // Check if session exists
-        // lookup the user in the DB by pulling their username from the session
-        User.findOne({ username: req.session.user.username }, function (err, user) {
-          if (!user) {
-            // if the user isn't found in the DB, reset the session info and
-            // redirect the user to the login page
-            req.session.reset();
-            res.redirect('/login');
-          } else {
-              console.log("user authentication successful");
-            // expose the user to the template
-                 req.user = user;
-                // delete the password from the session
-                req.session.user = user;  //refresh the session value
-                res.locals.user = user;
-            
-     
-            // render the dashboard page
-            res.render('approve');
+        if (req.session && req.session.user) {
+                return next();                  
+            }
+          else 
+           {
+            return res.redirect('/login');
           }
-        });
-      }
-       else 
-      {
-        res.redirect('/login');
-      }
-    
+}
+      
 
-    /*  res.status(200).json({decoded:"ok"}); */
+
+router.get('/home',verifySession , function(req,res, next){
+    
+        // Check if session exists
+       // lookup the user in the DB by pulling their username from the session
+       User.findOne({ username: req.session.user.username }, function (err, user) {
+        if (!user) {
+          // if the user isn't found in the DB, reset the session info and
+          // redirect the user to the login page
+          req.session.reset();
+          res.redirect('/login');
+        } else 
+        {
+            console.log("user authentication successful");
+          // expose the user to the template
+               req.user = user;
+              // delete the password from the session
+              req.session.user = user;  //refresh the session value
+              res.locals.user = user;
+          
+   
+          // render the approve page
+          res.render('approve');
+        }
+      });
+    
+    
+  
+
+   
 });
 
 
-router.get('/logout', function(req, res) {
+router.get('/logout',verifySession, function(req, res) {
     req.session.reset();
     res.redirect('/');
   });
@@ -187,7 +190,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all', function(req, res, next){
+router.get('/news/all',verifySession, function(req, res, next){
     console.log("inside approve");
     uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -196,7 +199,7 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/approval',verifySession, function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
@@ -206,7 +209,8 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: result });              
+                    res.json({ message: result._id });   
+                    console.log("The result is :"+result._id)           
                 });                
        
             
@@ -215,7 +219,7 @@ router.post('/approval', function(req, res, next) {
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("news deleted " + data);
-            res.json({ message: data });   
+            res.json({ message: data._id });   
             data.remove();
                 
         });
@@ -223,10 +227,10 @@ router.post('/approval', function(req, res, next) {
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
             if (err) throw err;
             console.log("1 document updated");    
-            res.json({ message: result });                 
+            res.json({ message: result._id });                 
         });   
         console.log("news rejected ");
     }
