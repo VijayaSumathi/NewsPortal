@@ -179,24 +179,17 @@ router.post('/approval', function(req, res, next) {
                     console.log("inserted");
                     if (err)
                         console.error(err);
-<<<<<<< HEAD
 
                 });
 
                 res.json(data);
-=======
-                });            
->>>>>>> 91e0cf5823a2c3c65bb0af38052f5b6392fd4028
 
 
             }
            
         });
-<<<<<<< HEAD
         
        // res.redirect('/indexhome');
-=======
->>>>>>> 91e0cf5823a2c3c65bb0af38052f5b6392fd4028
        
             
     } 
