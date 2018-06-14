@@ -15,7 +15,8 @@ function onAccept(e, id){
     success:function(data){
       lielement.append('<span>Approved</span>');
       console.log("onAccept Succes");
-      $(".click").prop('disabled', true); // enable butto
+      $(".click").prop('disabled', true); 
+      $(".hide").prop('disabled', true);// enable butto
     }
   })
 }
@@ -55,7 +56,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" id="hide" onclick="onReject(\''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" id="click" onclick="onDelete(\''+user._id+'\')"  >Delete</button>  </li>') 
+      $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" class="hide" onclick="onReject(\''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" id="click" onclick="onDelete(\''+user._id+'\')"  >Delete</button>  </li>') 
     });
   }
 });
