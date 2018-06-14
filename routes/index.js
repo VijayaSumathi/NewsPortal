@@ -38,7 +38,7 @@ router.get('/third', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
-
+// middleware
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
@@ -73,7 +73,7 @@ router.get('/home', function(req,res, next){
       }
     
 
-    /*  res.status(200).json({decoded:"ok"}); */
+    
 });
 
 
