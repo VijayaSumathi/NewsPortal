@@ -220,10 +220,10 @@ router.post('/approval',verifySession, function(req, res, next) {
     else if(status1.toLowerCase() == "delete")
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
-            console.log("news deleted " + data);
-            res.json({ message: data._id });   
+            console.log("news deleted " + data+"the image deleted"+ data.path);
+             data.path
             data.remove();
-                
+            res.json({ message: data._id });    
         });
         
     }
