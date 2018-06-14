@@ -5,10 +5,18 @@ var User = require('../models/adminlogin');
 var jwt = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
+var session = require('client-sessions');
+var bcrypt = require('bcryptjs');
 
-
-
-
+router.use(session({
+    cookieName: 'session',
+    secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+    httpOnly: true,
+    secure: true,
+    ephemeral: true
+  }));
 
 
 router.get('/', function(req, res, next){  
@@ -35,9 +43,45 @@ router.get('/last', function(req, res, next) {
     res.render('index');
 });
 router.get('/home', function(req,res, next){
-   
-    res.render('approve');
+    
+    if (req.session && req.session.user) {
+         // Check if session exists
+        // lookup the user in the DB by pulling their username from the session
+        User.findOne({ username: req.session.user.username }, function (err, user) {
+          if (!user) {
+            // if the user isn't found in the DB, reset the session info and
+            // redirect the user to the login page
+            req.session.reset();
+            res.redirect('/login');
+          } else {
+              console.log("user authentication successful");
+            // expose the user to the template
+                 req.user = user;
+                // delete the password from the session
+                req.session.user = user;  //refresh the session value
+                res.locals.user = user;
+            
+     
+            // render the dashboard page
+            res.render('approve');
+          }
+        });
+      }
+       else 
+      {
+        res.redirect('/login');
+      }
+    
+
+    /*  res.status(200).json({decoded:"ok"}); */
 });
+
+
+router.get('/logout', function(req, res) {
+    req.session.reset();
+    res.redirect('/');
+  });
+  
   
 router.get('/indexhome', function(req,res, next){
       res.render('index');
@@ -94,7 +138,7 @@ router.post('/uploadnews', function(req, res, next) {
 
 
 router.post('/login', function(req, res, next) { 
-    
+    var match;
     User.findOne({username:req.body.username},function(err,user){
        if(err)
        {
@@ -104,65 +148,37 @@ router.post('/login', function(req, res, next) {
         if(!user)
              {
                      console.log("Incorrect username");
-                    res.render('login',{ "Username": "wrong username" });
+                    res.render('login',{ message: "Authentication failed. User not found." });
              }
-        if(user.password==req.body.password  )
-        {     
-            const jwttoken = jwt.sign(
-                {  username: req.body.username ,
-                   password:req.body.password 
-                },
-                'secret',{
-                    expiresIn : '2h'
-                });    
-
-                return res.status(200).json({
-                    success: 'Welcome to the JWT Auth',
-                    token: jwttoken
-                  });
-                    
-        }
-        else
-        {
-        res.json({"ok":"wrong password"})       
-        }       
-    });
-
-/*
-    var username = req.body.username;
-    var password = req.body.password;
-
-    console.log(username);
-    console.log(password);
-
-    User.find({}, function(err, data) {
-    console.log(data)
-        if (username == data[0].username) {
-            if(password==data[0].password)
-            {
-                jwt.sign({username:data},'secretkey',(err,token)=>{
-                    //res.json({token:token})
-            
+           
+             
+            bcrypt.compare(req.body.password, user.password, function(err, res) {
+                console.log(res);
+                if(res)
+                {
+                    match="true"
+               
+               }
+               else
+               {
+                match=="false"
+                return res.json({message:"Authentication failed. Wrong password"});
+               }
+                
             });
-                console.log("correct");
-                res.redirect('/home'); 
-            }
-            else
-            { 
-                 console.log("wrong password")
-                res.render('login',{ password: "wrong password" });
-            }
-        } 
-        else
-         {
-            console.log("wrong username")
-          res.render('login',{ password: "wrong username" });
-        }
-        
-         
-        console.log(">>>>");
+      if(match=="true")
+      {
+        req.session.user = user;
+        res.redirect('/home') 
+      }
+      else if(match=="false"){
+        res.json({message:"Authentication failed. Wrong password"});
+      }
+          
     });
-*/
+  
+   
+           
 });
 
 
@@ -221,26 +237,8 @@ router.get('/news/approve', function(req, res, next) {
 });
 
 
-/* save password */
 
 
-function verifyToken(req,res,next) {
-    //get auth val
-     const  bearerHeader = req.headers['authorization'];
-     //check if bearer is undefined
-     if(typeof bearerHeader!== "undefined")
-     {
-           const bearer = bearerHeader.split(' ');
-           //get token from array
-           const bearerToken =bearer[1];
-           req.token=bearerToken;
-           next();
-     }
-     else{
-         //forbidden
-         res.sendStatus(403);
-     }
-}
 
 
 module.exports = router;
