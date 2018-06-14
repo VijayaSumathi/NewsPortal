@@ -209,8 +209,8 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: id1 });   
-                    console.log(result)           
+                    res.json({ message: result._id });   
+                    console.log("The result is :"+result._id)           
                 });                
        
             
@@ -219,7 +219,7 @@ router.post('/approval', function(req, res, next) {
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("news deleted " + data);
-            res.json({ message: data });   
+            res.json({ message: data._id });   
             data.remove();
                 
         });
@@ -230,7 +230,7 @@ router.post('/approval', function(req, res, next) {
         uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
             if (err) throw err;
             console.log("1 document updated");    
-            res.json({ message: result });                 
+            res.json({ message: result._id });                 
         });   
         console.log("news rejected ");
     }
