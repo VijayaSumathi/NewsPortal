@@ -214,7 +214,7 @@ router.post('/approval', function(req, res, next) {
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
+        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
             if (err) throw err;
             console.log("1 document updated");    
             res.json({ message: "News rejected" });                 
