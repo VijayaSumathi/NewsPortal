@@ -160,7 +160,7 @@ router.post('/login', function(req, res, next) {
         if(!user)
              {
                      console.log("Incorrect username");
-                    res.render('login',{ message: "Authentication failed. User not found." });
+                     res.json({message:"Authentication failed. Wrong password"});
              }
            
              
