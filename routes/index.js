@@ -42,7 +42,16 @@ router.get('/login', function(req, res, next) {
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
-router.get('/home', function(req,res, next){
+/*
+var a = funtion(req,res,next){
+    //if valid
+    next();
+    //failed val
+    res.render('err');
+
+}
+*/
+router.get('/home',a , function(req,res, next){
     
     if (req.session && req.session.user) {
          // Check if session exists
@@ -197,7 +206,7 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ docs: result });           
+                    res.json({ message: result });              
                 });                
        
             
@@ -206,7 +215,7 @@ router.post('/approval', function(req, res, next) {
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("news deleted " + data);
-            res.json({ message: "News Deleted" });   
+            res.json({ message: data });   
             data.remove();
                 
         });
@@ -217,7 +226,7 @@ router.post('/approval', function(req, res, next) {
         uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
             if (err) throw err;
             console.log("1 document updated");    
-            res.json({ message: "News rejected" });                 
+            res.json({ message: result });                 
         });   
         console.log("news rejected ");
     }
