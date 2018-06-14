@@ -190,7 +190,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all', function(req, res, next){
+router.get('/news/all',verifySession, function(req, res, next){
     console.log("inside approve");
     uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -199,7 +199,7 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/approval',verifySession, function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
