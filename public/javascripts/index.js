@@ -3,7 +3,9 @@
 //ourRequest.onload=function(){
 //console.log(ourRequest.responseText);
 //};
-function onAccept(id){
+function onAccept(e, id){
+  var target = e.currentTarget;
+  var lielement = $(target).closest('li');
   console.log("id",id);
   $.ajax({
     type:"POST",
@@ -11,11 +13,27 @@ function onAccept(id){
     data:{_id : id, status:"accept"},
     datatype:"json",
     success:function(data){
+      lielement.append('<span>Approved</span>');
       console.log("onAccept Succes");
+      $("#click").attr('disabled', true); 
+      $("#hide").attr('disabled', true);// enable butto
     }
   })
+  $.ajax({
+    type:"GET",
+    url:'',
+    success:function(newsid)
+    {
+      
+    }
+ 
+
+  })
 }
-function onReject(id){
+
+function onReject(e, id){
+  var target = e.currentTarget;
+  var lielement = $(target).closest('li');
   console.log("id",id);
   $.ajax({
     type:"POST",
@@ -23,6 +41,7 @@ function onReject(id){
     data:{_id : id, status:"reject"},
     datatype:"json",
     success:function(data){
+      lielement.append('<span>Approved</span>');
       console.log("onReject Succes");
     }
   })
@@ -39,6 +58,7 @@ function onDelete(id){
     }
   })
 }
+		
 
 $(function(){
   var $newslist=$('#newslist');
@@ -49,7 +69,9 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.append('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(\''+user._id+'\')"  >Approve</button>     <button name="status" value="reject" id="click" onclick="onReject(\''+user._id+'\')"  >Reject</button>       <button name="status" value="delete" id="click" onclick="onDelete(\''+user._id+'\')"  >Delete</button>  </li>') 
+     $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" id="hide" onclick="onReject(event,\''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" id="delete" onclick="onDelete(event,\''+user._id+'\')"  >Delete</button>  </li>') 
+     
+    
     });
   }
 });

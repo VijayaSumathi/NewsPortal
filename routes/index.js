@@ -150,17 +150,13 @@ router.post('/approval', function(req, res, next) {
 
                 });
 
-                //res.json(data);
+                res.json(data);
 
 
             }
            
         });
-        uploadmynew.findOne({ _id: id1 }, function(error, data) {
-            console.log("This object will get deleted " + data);
-            data.remove();
-
-        });
+        
        // res.redirect('/indexhome');
        
     } 
