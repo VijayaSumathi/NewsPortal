@@ -7,17 +7,20 @@ head
     script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js", type="text/javascript")
     style.
       body {
-      background-color: white;
+      background-color: gainsboro;
+      margin:0px 0px 0px 0px;
       }
       img {
       width: 62%;
-      height: 70%;
+      height: auto;
+      margin-top:0px;
       }
       .input1 {
       color: black;
       width: 100%;
       font-size: 100%;
       height: 20%;
+      margin-top:0px;
       }
       .input11 {
       margin-left: 500px;
@@ -43,11 +46,12 @@ head
       }
       .column {
       float: left;
-      height: 150px;
-      }
+      height: 140px;
+      
+           }
       .left {
       width: 75%;
-      font-size: 180%;
+      font-size: 150%;
       }
       .right {
       width: 25%;
@@ -57,10 +61,25 @@ head
       display: table;
       clear: both;
       }
+      .content{
+         max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 10px;
+        padding-right:10px;
+      }
+      .container{
+        max-width: 900px;
+        margin: auto;
+        background: white;
+        padding: 0px;
+        padding-right:0px;
+      }
 
 
  body
-    .input1(style='background-color:lightskyblue')
+   .container
+    .input1(style='background-color:lightskyblue;')
       .row
         .column.left
           center
@@ -68,33 +87,8 @@ head
         .column.right
           h2
             a(href='/index') Upload Your News
-
-
-    .one
-      center
-        div
-          img(src='/images/6.webp')
-          h1
-            b  India's Football Match In Mumbai Sold Out After Sunil Chhetri's Heartfelt Plea
-          p(style='font-size:150%;')
-            | Sunil Chhetri had made a heartfelt plea to fans on Saturday to go watch India football matches in the stadiums. The India football team captain's appeal seems to have done the trick with NDTV sources.......
-            a(href='/first') read more
-    .two
-      center
-        div
-          img(src='/images/3.webp')
-          h1 Summer Diet Alert Expert Food Tips On What To Do And Avoid This Summer
-          p(style='font-size:150%;')
-            | Summers are here in full force. The sweltering heat has started to take a toll on our energy levels, skin and several other aspects our daily lives. Most of us even dread the thought of stepping out, but you .........
-            a(href='/second') read more
-    .three
-      center
-        div
-          img(src='/images/5.webp')
-          h1 US Official Praises PM Modi Remarks, Seen As Criticising Chinese Loans
-          p(style='font-size:150%;')
-            | US Defence Secretary James Mattis has praised Prime Minister Narendra Modi for speaking about massive debts, saying he made a really good point about the dangers of accepting loans that are "too good to be true".........
-            a(href='/third') read more
+  .content
+        
       ul#approved
       
     script(src='/javascripts/index1.js')

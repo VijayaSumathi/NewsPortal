@@ -8,7 +8,7 @@ $(function() {
 
 
             $.each(newslist.docs, function(i, user) {
-                $newslist.append('<li><center><img  src="' + user.path + '"></center><h1><center>' + user.title + '</center</h1><p style="font-size:24px">' + user.description + '</p></li>')
+                $newslist.prepend('<center><img  src="' + user.path + '"></center><h1 style="text-align:center"><center>' + user.title + '</center></h1><p style="padding-left:50px" style="margin-bottom:50px">' + user.description + '</p>')
 
 
             });
