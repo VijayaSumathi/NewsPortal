@@ -197,7 +197,7 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: "Approved" });              
+                                
                 });                
        
             
