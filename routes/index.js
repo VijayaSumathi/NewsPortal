@@ -220,13 +220,13 @@ router.post('/approval', function(req, res, next) {
             console.log("news deleted " + data);
             res.json({ message: data });   
             data.remove();
-               
+                
         });
         
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
+        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
             if (err) throw err;
             console.log("1 document updated");    
             res.json({ message: result });                 
