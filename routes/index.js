@@ -42,51 +42,54 @@ router.get('/login', function(req, res, next) {
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
-/*
-var a = funtion(req,res,next){
-    //if valid
-    next();
-    //failed val
-    res.render('err');
 
-}
-*/
-router.get('/home',a , function(req,res, next){
+function verifySession(req,res,next)
+ {
     
-    if (req.session && req.session.user) {
-         // Check if session exists
-        // lookup the user in the DB by pulling their username from the session
-        User.findOne({ username: req.session.user.username }, function (err, user) {
-          if (!user) {
-            // if the user isn't found in the DB, reset the session info and
-            // redirect the user to the login page
-            req.session.reset();
-            res.redirect('/login');
-          } else {
-              console.log("user authentication successful");
-            // expose the user to the template
-                 req.user = user;
-                // delete the password from the session
-                req.session.user = user;  //refresh the session value
-                res.locals.user = user;
-            
-     
-            // render the dashboard page
-            res.render('approve');
+            if (req.session && req.session.user) {
+                return next();                  
+            }
+          else 
+           {
+            return res.redirect('/login');
           }
-        });
-      }
-       else 
-      {
-        res.redirect('/login');
-      }
-    
+}
+      
 
-    /*  res.status(200).json({decoded:"ok"}); */
+
+router.get('/home',verifySession , function(req,res, next){
+    
+        // Check if session exists
+       // lookup the user in the DB by pulling their username from the session
+       User.findOne({ username: req.session.user.username }, function (err, user) {
+        if (!user) {
+          // if the user isn't found in the DB, reset the session info and
+          // redirect the user to the login page
+          req.session.reset();
+          res.redirect('/login');
+        } else 
+        {
+            console.log("user authentication successful");
+          // expose the user to the template
+               req.user = user;
+              // delete the password from the session
+              req.session.user = user;  //refresh the session value
+              res.locals.user = user;
+          
+   
+          // render the approve page
+          res.render('approve');
+        }
+      });
+    
+    
+  
+
+   
 });
 
 
-router.get('/logout', function(req, res) {
+router.get('/logout',verifySession, function(req, res) {
     req.session.reset();
     res.redirect('/');
   });
