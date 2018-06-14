@@ -8,34 +8,22 @@ img {
 }
 
 .input1 {
-    color: black;
     width: 100%;
-    font-size: 100%;
+    font-size: 90%;
     height: 200%;
 }
 
 .input11 {
     margin-left: 500px;
     margin-right: 200px;
-    margin-bottom: 10px;
-}
-
-.one {
-    border-style: groove;
-    margin: 10px 175px 10px 175px;
-    border-color: rgb(233, 11, 11);
+    margin-bottom: 20px;
 }
 
 .two {
-    border-style: groove;
-    margin: 10px 175px 10px 175px;
-    border-color: rgb(233, 11, 11);
-}
-
-.three {
-    border-style: groove;
-    margin: 10px 175px 10px 175px;
-    border-color: rgb(233, 11, 11);
+    border: 5px white;
+    padding: 20px;
+    box-shadow: 1px 3px 7px 1px grey;
+    margin: 10px 230px 10px 230px;
 }
 
 * {
@@ -44,15 +32,17 @@ img {
 
 .column {
     float: left;
-    height: 150px;
+    height: 100px;
 }
 
 .left {
+    color: white;
     width: 75%;
     font-size: 180%;
 }
 
 .right {
+    color: white;
     width: 25%;
 }
 
@@ -60,4 +50,11 @@ img {
     content: "";
     display: table;
     clear: both;
+}
+
+.approved {
+    border: 5px white;
+    padding: 20px;
+    box-shadow: 1px 3px 7px 1px grey;
+    margin: 10px 230px 10px 230px;
 }
