@@ -25,7 +25,7 @@ router.get('/', function(req, res, next){
 router.get('/index', function(req, res, next) {
     res.render('upload');
 });
-
+/*
 router.get('/first', function(req, res, next) {
     res.render('one');
 });
@@ -34,7 +34,7 @@ router.get('/second', function(req, res, next) {
 });
 router.get('/third', function(req, res, next) {
     res.render('three');
-});
+});*/
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
@@ -209,7 +209,8 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: result });              
+                    res.json({ message: id1 });   
+                    console.log(result)           
                 });                
        
             
