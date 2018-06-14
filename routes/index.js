@@ -73,7 +73,7 @@ router.get('/home', function(req,res, next){
       }
     
 
-    
+    /*  res.status(200).json({decoded:"ok"}); */
 });
 
 
