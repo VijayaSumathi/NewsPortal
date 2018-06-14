@@ -15,25 +15,12 @@ function onAccept(e, id){
     success:function(data){
       lielement.append('<span>Approved</span>');
       console.log("onAccept Succes");
-      $("#click").attr('disabled', true); 
-      $("#hide").attr('disabled', true);// enable butto
+      $("#click").prop('disabled', true); // enable butto
     }
-  })
-  $.ajax({
-    type:"GET",
-    url:'',
-    success:function(newsid)
-    {
-      
-    }
- 
-
   })
 }
 
-function onReject(e, id){
-  var target = e.currentTarget;
-  var lielement = $(target).closest('li');
+function onReject(id){
   console.log("id",id);
   $.ajax({
     type:"POST",
@@ -41,7 +28,6 @@ function onReject(e, id){
     data:{_id : id, status:"reject"},
     datatype:"json",
     success:function(data){
-      lielement.append('<span>Approved</span>');
       console.log("onReject Succes");
     }
   })
@@ -69,9 +55,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-     $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" id="hide" onclick="onReject(event,\''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" id="delete" onclick="onDelete(event,\''+user._id+'\')"  >Delete</button>  </li>') 
-     
-    
+      $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p> <button name="status" value="accept" id="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" id="hide" onclick="onReject(\''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" id="click" onclick="onDelete(\''+user._id+'\')"  >Delete</button>  </li>') 
     });
   }
 });
