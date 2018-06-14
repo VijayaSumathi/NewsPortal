@@ -150,7 +150,7 @@ router.post('/uploadnews', function(req, res, next) {
 
 
 router.post('/login', function(req, res, next) { 
-    var match;
+    
     User.findOne({username:req.body.username},function(err,user){
        if(err)
        {
@@ -160,7 +160,7 @@ router.post('/login', function(req, res, next) {
           if(!user)
              {
                      console.log("Incorrect username");
-                     res.json({message:"Authentication failed. Wrong password"});
+                     res.render('login',{message:"Authentication failed, Wrong Username"});
              }
              else{
 
@@ -177,9 +177,8 @@ router.post('/login', function(req, res, next) {
                }
                else
                {
-                match=="false"
+                res.render('login',{message:"Authentication failed, Wrong password"});            
                 
-                res.json({message:"Authentication failed. Wrong password"});
                }
                 
             });
