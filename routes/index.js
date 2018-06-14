@@ -152,21 +152,23 @@ router.post('/login', function(req, res, next) {
              }
            
              
-            bcrypt.compare(req.body.password, user.password, function(err, res) {
+            bcrypt.compare(req.body.password, user.password, function(err, result) {
                 console.log(res);
-                if(res)
+                if(result)
                 {
-                    match="true"
+                    req.session.user = user;
+                    res.redirect('/home') 
                
                }
                else
                {
                 match=="false"
-                return res.json({message:"Authentication failed. Wrong password"});
+                
+                res.json({message:"Authentication failed. Wrong password"});
                }
                 
             });
-      if(match=="true")
+    /*  if(match=="true")
       {
         req.session.user = user;
         res.redirect('/home') 
@@ -174,7 +176,7 @@ router.post('/login', function(req, res, next) {
       else if(match=="false"){
         res.json({message:"Authentication failed. Wrong password"});
       }
-          
+  */        
     });
   
    
