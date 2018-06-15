@@ -44,8 +44,8 @@ router.get('/last', function(req, res, next) {
     res.render('index');
 });
 
-function verifySession(req,res,next)
- {
+
+router.all('/admin/*', function(req, res, next) {     
     
         if (req.session && req.session.user) {
                 return next();                  
@@ -54,11 +54,13 @@ function verifySession(req,res,next)
            {
             return res.redirect('/login');
           }
-}
+  
+  })
+
       
 
 
-router.get('/home',verifySession , function(req,res, next){
+router.get('/admin/home' , function(req,res, next){
     
         // Check if session exists
        // lookup the user in the DB by pulling their username from the session
@@ -90,7 +92,7 @@ router.get('/home',verifySession , function(req,res, next){
 });
 
 
-router.get('/logout',verifySession, function(req, res) {
+router.get('/admin/logout', function(req, res) {
     req.session.reset();
     res.redirect('/');
   });
@@ -188,7 +190,7 @@ router.post('/login', function(req, res, next) {
 
 
 
-router.get('/news/all',verifySession, function(req, res, next){
+router.get('/admin/news/all', function(req, res, next){
     console.log("inside approve");
     uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -197,7 +199,7 @@ router.get('/news/all',verifySession, function(req, res, next){
     });
 });
 
-router.post('/approval',verifySession, function(req, res, next) {
+router.post('/admin/approval', function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
@@ -265,7 +267,6 @@ router.get('/news/approve', function(req, res, next) {
       }
   });
 });
-
 
 
 
