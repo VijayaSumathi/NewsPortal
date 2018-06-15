@@ -233,9 +233,11 @@ router.post('/approval',verifySession, function(req, res, next) {
             console.log("the status " + data.status);
             if(data.status=="accept")
             {
+                console.log("rej");
                 res.json({ message: "Cant reject approved news"});  
             }
             else{
+                console.log("rej1");
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    

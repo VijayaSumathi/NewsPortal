@@ -7,11 +7,18 @@ body{
     padding-right: 30px;
     padding-left: 30px;
 }
+
 .head{ padding-top: 0px;
     padding-right:50px;
     padding-bottom:20px;
     padding-left: 40px;
     text-align: center;
+    }
+    .delete1{
+        padding-left:130px;
+    }
+    .reject{
+padding-left:70px;
     }
     img{
         width:94%;
