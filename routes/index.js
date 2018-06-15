@@ -39,10 +39,11 @@ router.get('/third', function(req, res, next) {
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
-// middleware
+
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
+
 
 
 router.all('/admin/*', function(req, res, next) {     
@@ -173,7 +174,7 @@ router.post('/login', function(req, res, next) {
                 if(result)
                 {
                     req.session.user = user;
-                    res.redirect('/home')                
+                    res.redirect('/admin/home')                
                }
                else
                {
