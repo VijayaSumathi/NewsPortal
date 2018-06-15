@@ -58,7 +58,7 @@ function onDelete(e,id){
       console.log("onDelete Succes");
       lielement.append('<div class="delete1">Deleted</div>');
       console.log(data);
-      lielement.children(".click1").prop('disabled', true);
+      lielement.children(".delete").prop('disabled', true);
       lielement.children(".hide").prop('disabled',true);
       lielement.children(".click").prop('disabled',true);
       if(data) {   // DO SOMETHING
