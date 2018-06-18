@@ -174,11 +174,11 @@ router.post('/login', function(req, res, next) {
                 if(result)
                 {
                     req.session.user = user;
-                    res.redirect('/admin/home')                
+                    return  res.redirect('/admin/home')                
                }
                else
                {
-                res.render('login',{message:"Authentication failed, Wrong password"});            
+                 return res.render('login',{message:"Authentication failed, Wrong password"});            
                 
                }
                 
@@ -192,13 +192,22 @@ router.post('/login', function(req, res, next) {
 
 
 router.get('/admin/news/all', function(req, res, next){
-    console.log("inside approve");
-    uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
-        if (err) { res.json(err); } else {
-            res.json({ docs: docs });
+    
+    uploadmynew.find({ $or: [ { "status":"reject" }, { "status":"fresh" } ] } , function(err, docs) {
+        if (err) { return res.json(err); } else {
+            return res.json({ docs: docs });
         }
     });
 });
+
+/*
+ uploadmynew.find({} , function(err, docs) {
+        if (err) { return res.json(err); } else {
+            return res.json({ docs: docs });
+        }
+    });
+});
+*/
 
 router.post('/admin/approval', function(req, res, next) {
     var status1 = req.body.status;
@@ -206,15 +215,23 @@ router.post('/admin/approval', function(req, res, next) {
     console.log(req.body);
     if (status1.toLowerCase() == "accept")
     {                                 
-                
+        
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
+
+
+                  if(data.status=="accept")
+                   {
+                   console.log("cant accept twice");
+                   res.json({ message: "Cant accept"});  
+                 }
+                 else{
                     console.log("1 document updated");    
-                    res.json({ message: result._id });   
+                    return res.json({ message: result.id });   
                     console.log("The result is :"+result._id)           
+                }
                 });                
-       
-            
+        
     } 
     else if(status1.toLowerCase() == "delete")
     {  
@@ -226,7 +243,11 @@ router.post('/admin/approval', function(req, res, next) {
               //delete photo
               fs.unlink( __dirname + '/../public/images/'+file, function(error) {
                 if (error) {
-                    throw error;
+                   
+                }
+                else
+                {
+
                 }
                 console.log('Deleted !!');
             });
