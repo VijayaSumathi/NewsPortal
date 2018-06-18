@@ -95,7 +95,7 @@ router.get('/admin/home' , function(req,res, next){
 
 router.get('/admin/logout', function(req, res) {
     req.session.reset();
-    res.redirect('/');
+    res.redirect('/login');
   });
   
   
