@@ -18,8 +18,7 @@ html
     width: 98.5%;
     padding-left:10px;
     padding-right:10px;
-    max-height:60px;
-    margin-top:0px;
+    max-height:80px;
     }
     input[type=text], select, textarea {
     width: 100%;
@@ -47,9 +46,25 @@ html
     background-color: #f2f2f2;
     padding: 20px;
     }
+       i {
+      border: solid black;
+      border-width: 0 7px 7px 0;
+      display: inline-block;
+      padding: 10px;
+      }
+      .left {
+      transform: rotate(135deg);
+      -webkit-transform: rotate(135deg);
+      }
+      check {
+      font-size: 200%;
+      }
   body
     .main
-      h2 UPLOAD YOUR NEWS HERE!
+        i.arrow.left
+        b
+          a(href='/last') BACK
+          h2 UPLOAD YOUR NEWS HERE!
     .container
       form(action='/uploadnews' method='post' enctype='multipart/form-data')
         label(for='lname') Title

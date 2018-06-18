@@ -1,0 +1,60 @@
+body {
+    background-color: white;
+}
+
+img {
+    width: 62%;
+    height: 70%;
+}
+
+.input1 {
+    width: 100%;
+    font-size: 90%;
+    height: 200%;
+}
+
+.input11 {
+    margin-left: 500px;
+    margin-right: 200px;
+    margin-bottom: 20px;
+}
+
+.two {
+    border: 5px white;
+    padding: 20px;
+    box-shadow: 1px 3px 7px 1px grey;
+    margin: 10px 230px 10px 230px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    height: 100px;
+}
+
+.left {
+    color: white;
+    width: 75%;
+    font-size: 180%;
+}
+
+.right {
+    color: white;
+    width: 25%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.approved {
+    border: 5px white;
+    padding: 20px;
+    box-shadow: 1px 3px 7px 1px grey;
+    margin: 10px 230px 10px 230px;
+}
