@@ -48,7 +48,7 @@ html
     }
        i {
       border: solid black;
-      border-width: 0 7px 7px 0;
+      border-width: 0 4px 4px 0;
       display: inline-block;
       padding: 10px;
       }
@@ -77,8 +77,8 @@ html
           <option value="usa">USA</option>
           </select>
         label(for='subject') Description
-        textarea#subject(name='description', placeholder='Write something..', style='height:200px',required)
+        textarea#subject(name='description', placeholder='Write something..',style="height:200px",maxlength='1000',required)
         label(for='country') Upload image
-        input(type='file', name='pic',required)
+        input(type='file', name='pic')
         br
         input(type='submit', value='Submit')

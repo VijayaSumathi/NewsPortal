@@ -71,7 +71,8 @@ function onDelete(e,id){
 }
 		
 
-$(function(){
+$(function()
+{
   var $newslist=$('#newslist');
   $.ajax( {
     type:'GET',
