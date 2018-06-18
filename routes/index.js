@@ -193,12 +193,21 @@ router.post('/login', function(req, res, next) {
 
 router.get('/admin/news/all', function(req, res, next){
     
-    uploadmynew.find({} , function(err, docs) {
+    uploadmynew.find({ $or: [ { "status":"reject" }, { "status":"fresh" } ] } , function(err, docs) {
         if (err) { return res.json(err); } else {
             return res.json({ docs: docs });
         }
     });
 });
+
+/*
+ uploadmynew.find({} , function(err, docs) {
+        if (err) { return res.json(err); } else {
+            return res.json({ docs: docs });
+        }
+    });
+});
+*/
 
 router.post('/admin/approval', function(req, res, next) {
     var status1 = req.body.status;
@@ -209,9 +218,18 @@ router.post('/admin/approval', function(req, res, next) {
         
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
+
+
+                  if(data.status=="accept")
+                   {
+                   console.log("cant accept twice");
+                   res.json({ message: "Cant accept"});  
+                 }
+                 else{
                     console.log("1 document updated");    
                     return res.json({ message: result.id });   
                     console.log("The result is :"+result._id)           
+                }
                 });                
         
     } 
