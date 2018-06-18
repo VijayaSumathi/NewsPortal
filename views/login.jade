@@ -108,7 +108,10 @@ html
       .log-form .forgot:hover {
       color: #1ba0a9;
       }
-    
+      .a{
+        font-family: 'open sans condensed';
+        color:Blue;
+      }
   body
     .log-form
       h2 Login to your account
@@ -116,10 +119,11 @@ html
         input(type='text', title='username', placeholder='username', name='username')
         input(type='password', title='username', placeholder='password', name='password')
         input(type='submit', value='Submit') 
-        a.forgot(href='#') Forgot Username?
-        if password
+      
+        if message
+        .a
           p 
-          |error
+          |#{message}
         
 
         

@@ -7,6 +7,7 @@ const multer = require('multer');
 const path = require('path');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
+var fs = require('fs');
 
 router.use(session({
     cookieName: 'session',
@@ -25,7 +26,7 @@ router.get('/', function(req, res, next){
 router.get('/index', function(req, res, next) {
     res.render('upload');
 });
-
+/*
 router.get('/first', function(req, res, next) {
     res.render('one');
 });
@@ -34,30 +35,33 @@ router.get('/second', function(req, res, next) {
 });
 router.get('/third', function(req, res, next) {
     res.render('three');
-});
+});*/
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
-// middleware
+
 router.get('/last', function(req, res, next) {
     res.render('index');
 });
 
-function verifySession(req,res,next)
- {
+
+
+router.all('/admin/*', function(req, res, next) {     
     
-            if (req.session && req.session.user) {
+        if (req.session && req.session.user) {
                 return next();                  
             }
           else 
            {
             return res.redirect('/login');
           }
-}
+  
+  })
+
       
 
 
-router.get('/home',verifySession , function(req,res, next){
+router.get('/admin/home' , function(req,res, next){
     
         // Check if session exists
        // lookup the user in the DB by pulling their username from the session
@@ -89,7 +93,7 @@ router.get('/home',verifySession , function(req,res, next){
 });
 
 
-router.get('/logout',verifySession, function(req, res) {
+router.get('/admin/logout', function(req, res) {
     req.session.reset();
     res.redirect('/');
   });
@@ -150,47 +154,44 @@ router.post('/uploadnews', function(req, res, next) {
 
 
 router.post('/login', function(req, res, next) { 
-    var match;
+    
     User.findOne({username:req.body.username},function(err,user){
        if(err)
        {
            return res.send(401);
        }
 
-        if(!user)
+          if(!user)
              {
                      console.log("Incorrect username");
-                    res.render('login',{ message: "Authentication failed. User not found." });
+                     res.render('login',{message:"Authentication failed, Wrong Username"});
              }
-           
+             else
+             {            
              
             bcrypt.compare(req.body.password, user.password, function(err, result) {
                 console.log(res);
                 if(result)
                 {
                     req.session.user = user;
-                    res.redirect('/home') 
-               
+                    res.redirect('/admin/home')                
                }
                else
                {
-                match=="false"
+                res.render('login',{message:"Authentication failed, Wrong password"});            
                 
-                res.json({message:"Authentication failed. Wrong password"});
                }
                 
             });
-         
+        }
     });
-  
-   
            
 });
 
 
 
 
-router.get('/news/all', function(req, res, next){
+router.get('/admin/news/all', function(req, res, next){
     console.log("inside approve");
     uploadmynew.find( { $or: [ { "status":"reject" }, { "status":"fresh" } ] }, function(err, docs) {
         if (err) { res.json(err); } else {
@@ -199,7 +200,7 @@ router.get('/news/all', function(req, res, next){
     });
 });
 
-router.post('/approval', function(req, res, next) {
+router.post('/admin/approval', function(req, res, next) {
     var status1 = req.body.status;
     var id1 = req.body._id;
     console.log(req.body);
@@ -209,7 +210,8 @@ router.post('/approval', function(req, res, next) {
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: result });              
+                    res.json({ message: result._id });   
+                    console.log("The result is :"+result._id)           
                 });                
        
             
@@ -217,21 +219,45 @@ router.post('/approval', function(req, res, next) {
     else if(status1.toLowerCase() == "delete")
     {  
         uploadmynew.findOne({ _id: id1 }, function(error, data) {
-            console.log("news deleted " + data);
-            res.json({ message: data });   
+            console.log("news deleted " + data+"the image deleted"+ data.path);
+            
+            const file=  path.basename(data.path);
+            console.log(file)
+              //delete photo
+              fs.unlink( __dirname + '/../public/images/'+file, function(error) {
+                if (error) {
+                    throw error;
+                }
+                console.log('Deleted !!');
+            });
+                 
             data.remove();
-                
+            res.json({ message: data._id });    
         });
         
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, res) {
-            if (err) throw err;
-            console.log("1 document updated");    
-            res.json({ message: result });                 
-        });   
-        console.log("news rejected ");
+        uploadmynew.findOne({}, function(error, data) {
+            console.log("the status " + data.status);
+            if(data.status=="accept")
+            {
+                console.log("rej");
+                res.json({ message: "Cant reject approved news"});  
+            }
+            else{
+                console.log("rej1");
+                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
+                    if (err) throw err;
+                    console.log("1 document updated");    
+                    res.json({ message: result._id });                 
+                });   
+                console.log("news rejected ");
+            }
+              
+        });
+
+       
     }
    
 });
@@ -244,7 +270,6 @@ router.get('/news/approve', function(req, res, next) {
       }
   });
 });
-
 
 
 
