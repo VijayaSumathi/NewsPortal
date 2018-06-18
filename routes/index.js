@@ -218,18 +218,16 @@ router.post('/admin/approval', function(req, res, next) {
         
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
-
-
-                  if(data.status=="accept")
+                  /*if(data.status=="accept")
                    {
                    console.log("cant accept twice");
                    res.json({ message: "Cant accept"});  
                  }
-                 else{
+                 else{}*/
                     console.log("1 document updated");    
                     return res.json({ message: result.id });   
                     console.log("The result is :"+result._id)           
-                }
+                
                 });                
         
     } 
@@ -245,10 +243,7 @@ router.post('/admin/approval', function(req, res, next) {
                 if (error) {
                    
                 }
-                else
-                {
-
-                }
+               
                 console.log('Deleted !!');
             });
                  
