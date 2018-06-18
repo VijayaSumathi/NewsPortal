@@ -26,16 +26,7 @@ router.get('/', function(req, res, next){
 router.get('/index', function(req, res, next) {
     res.render('upload');
 });
-/*
-router.get('/first', function(req, res, next) {
-    res.render('one');
-});
-router.get('/second', function(req, res, next) {
-    res.render('two');
-});
-router.get('/third', function(req, res, next) {
-    res.render('three');
-});*/
+
 router.get('/login', function(req, res, next) {
   res.render('login');
 });
@@ -70,7 +61,7 @@ router.get('/admin/home' , function(req,res, next){
           // if the user isn't found in the DB, reset the session info and
           // redirect the user to the login page
           req.session.reset();
-          res.redirect('/login');
+          return res.redirect('/login');
         } else 
         {
             console.log("user authentication successful");
@@ -82,7 +73,7 @@ router.get('/admin/home' , function(req,res, next){
           
    
           // render the approve page
-          res.render('approve');
+          return res.render('approve');
         }
       });
     
@@ -95,12 +86,12 @@ router.get('/admin/home' , function(req,res, next){
 
 router.get('/admin/logout', function(req, res) {
     req.session.reset();
-    res.redirect('/login');
+    return res.redirect('/login');
   });
   
   
 router.get('/indexhome', function(req,res, next){
-      res.render('index');
+    return res.render('index');
 });
   
   
@@ -147,7 +138,7 @@ router.post('/uploadnews', function(req, res, next) {
                 console.log("error");
             }); 
         });
-        res.render('index',{ upload: "news uploaded" });        
+        return  res.render('index',{ upload: "news uploaded" });        
    
     
 });
@@ -164,7 +155,7 @@ router.post('/login', function(req, res, next) {
           if(!user)
              {
                      console.log("Incorrect username");
-                     res.render('login',{message:"Authentication failed, Wrong Username"});
+                     return   res.render('login',{message:"Authentication failed, Wrong Username"});
              }
              else
              {            
@@ -248,7 +239,7 @@ router.post('/admin/approval', function(req, res, next) {
             });
                  
             data.remove();
-            res.json({ message: data._id });    
+            return res.json({ message: data._id });    
         });
         
     }
@@ -259,14 +250,14 @@ router.post('/admin/approval', function(req, res, next) {
             if(data.status=="accept")
             {
                 console.log("rej");
-                res.json({ message: "Cant reject approved news"});  
+                return  res.json({ message: "Cant reject approved news"});  
             }
             else{
                 console.log("rej1");
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
-                    res.json({ message: result._id });                 
+                    return  res.json({ message: result._id });                 
                 });   
                 console.log("news rejected ");
             }
@@ -281,8 +272,8 @@ router.post('/admin/approval', function(req, res, next) {
 router.get('/news/approve', function(req, res, next) {
 
     uploadmynew.find({"status":"accept"}, function(err, docs) {
-      if (err) { res.json(err); } else {
-          res.json({ docs: docs });
+      if (err) { return res.json(err); } else {
+        return res.json({ docs: docs });
       }
   });
 });
