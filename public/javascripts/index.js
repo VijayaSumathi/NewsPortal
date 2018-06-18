@@ -9,7 +9,7 @@ function onAccept(e, id){
   console.log("id",id);
   $.ajax({
     type:"POST",
-    url:'/approval',
+    url:'/admin/approval',
     data:{_id : id, status:"accept"},
     datatype:"json",
     success:function(data){
@@ -32,7 +32,7 @@ function onReject(e,id){
   console.log("id",id);
   $.ajax({
     type:"POST",
-    url:'/approval',
+    url:'/admin/approval',
     data:{_id : id, status:"reject"},
     datatype:"json",
     success:function(data){
@@ -51,7 +51,7 @@ function onDelete(e,id){
   console.log("id",id);
   $.ajax({
     type:"POST",
-    url:'/approval',
+    url:'/admin/approval',
     data:{_id : id, status:"delete"},
     datatype:"json",
     success:function(data){
@@ -71,11 +71,12 @@ function onDelete(e,id){
 }
 		
 
-$(function(){
+$(function()
+{
   var $newslist=$('#newslist');
   $.ajax( {
     type:'GET',
-    url:'/news/all',
+    url:'/admin/news/all',
     success:function(newslist){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)

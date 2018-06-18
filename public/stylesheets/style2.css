@@ -6,11 +6,13 @@ body{
     background: white;
     padding-right: 30px;
     padding-left: 30px;
+
+
 }
 
 .head{ padding-top: 0px;
     padding-right:50px;
-    padding-bottom:20px;
+    padding-bottom:10px;
     padding-left: 40px;
     text-align: center;
     }
@@ -24,14 +26,14 @@ padding-left:70px;
         width:94%;
         height:80%;
         }
-.A{
-    overflow: hidden;
-     background-color:lightskyblue;
-     position:relative;
-     width: 100%;
-     padding-right:0px;
-     max-height:50px;
-    }
+        .userlist-wrapper{
+            padding-top:10px;
+        }
+ a{
+ display: block;
+ text-transform: uppercase;
+ float:right;
+}
      .content {
         max-width: 500px;
         margin: auto;
@@ -45,3 +47,14 @@ padding-left:70px;
         ul {
             list-style-type: none;
           }
+         /* .button1 {
+            border: none;
+            padding: 5px 2px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+
+        }*/
