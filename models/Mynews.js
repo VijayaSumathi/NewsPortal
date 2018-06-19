@@ -5,7 +5,8 @@ var NewsSchema = new Schema({
        description: String, 
        path:   String ,
        status:String ,
-       createdAt: { type: Date, default: Date.now, expires: '43200m'  }
+       createdAt: { type: Date, default: Date.now, expires: '43200m'  },
+       updated_at: { type: Date, default: Date.now }
         
   });
 
