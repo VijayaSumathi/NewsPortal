@@ -4,11 +4,12 @@ var uploadmynew = require('../models/Mynews');
 var User = require('../models/adminlogin');
 var jwt = require('jsonwebtoken');
 const multer = require('multer');
+
 const path = require('path');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
 var fs = require('fs');
-
+var AWS = require('aws-sdk');
 router.use(session({
     cookieName: 'session',
     secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
@@ -18,9 +19,13 @@ router.use(session({
     secure: true,
     ephemeral: true
   }));
-
+  var s3 = new AWS.S3({
+    accessKeyId:'AKIAJUJCSZVDZ72WW7JA',
+    secretAccessKey:'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'
+});
 
 router.get('/', function(req, res, next){  
+    res.send()
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -29,6 +34,7 @@ router.get('/index', function(req, res, next) {
 
 router.get('/login', function(req, res, next) {
   res.render('login');
+
 });
 
 router.get('/last', function(req, res, next) {
@@ -69,18 +75,12 @@ router.get('/admin/home' , function(req,res, next){
                req.user = user;
               // delete the password from the session
               req.session.user = user;  //refresh the session value
-              res.locals.user = user;
-          
+              res.locals.user = user;         
    
           // render the approve page
           return res.render('approve');
         }
-      });
-    
-    
-  
-
-   
+      });   
 });
 
 
@@ -109,36 +109,56 @@ router.post('/uploadnews', function(req, res, next) {
         const upload = multer({
             storage: storageEngine
         }).single('pic');  
-        upload(req, res, function(err, result) {            
-                
-            if(!res.req.file)
-            {
-                
-                  a=null
-            }
-            else
-            {
-                a='http://localhost:3000/images/'+res.req.file.filename
-            }
+        upload(req, res, function(err, result) {                  
+                    console.log(req.file.originalname);
+            
+           
+               console.log(req.file.path)
 
-            const news = new uploadmynew({
-                title: req.body.title,
-                description: req.body.description,               
-                 path: a,          
-                 status:"fresh"
-            }); 
-            news.save()
-            .then(data => {
-                console.log("News successfully uploaded");
-                //res.send(data);
-            }).catch(err => {
-                res.status(500).send({
-                    message: err.message || "Some error occurred ."
-                });
-                console.log("error");
-            }); 
+               fs.readFile(req.file.path, function(err, file_buffer){
+            
+                    var params = {
+                        Bucket:  'y2018m06d20ywdllxn0b3jlltsc',
+                        Key:res.req.file.filename, //This is what S3 will use to store the data uploaded.
+                        Body:file_buffer, //the actual *file* being uploaded
+                        ContentType: req.file.mimetype, //type of file being uploaded
+                        ACL: 'public-read', //Set permissions so everyone can see the image
+                       
+                } ;
+                console.log(res.req.file.filename);
+               s3.putObject(params, function (perr, data) {
+                if (perr) {
+                    console.log("Error uploading data: ", perr);
+                } 
+                else
+                 {
+                    console.log("Successfully uploaded data "+data.location);
+                    var imageurl="d1h8e9mz50lns7.cloudfront.net"+ '/' + encodeURIComponent(res.req.file.filename);
+                         
+                    const news = new uploadmynew({
+                        title: req.body.title,
+                        description: req.body.description,               
+                        path: "http://"+imageurl,          
+                        status:"fresh"
+                    }); 
+                    news.save()
+                    .then(data => {
+                        console.log("News successfully uploaded");
+                        //res.send(data);
+                    }).catch(err => {
+                        res.status(500).send({
+                            message: err.message || "Some error occurred ."
+                        });
+                        console.log("error");
+                    });
+                  console.log(imageurl);
+                }
+            });
         });
-        return  res.render('index',{ upload: "news uploaded" });        
+
+        return  res.render('index',{ upload: "news uploaded" });           
+        });
+          
    
     
 });
@@ -191,14 +211,9 @@ router.get('/admin/news/all', function(req, res, next){
     });
 });
 
-/*
- uploadmynew.find({} , function(err, docs) {
-        if (err) { return res.json(err); } else {
-            return res.json({ docs: docs });
-        }
-    });
-});
-*/
+
+
+
 
 router.post('/admin/approval', function(req, res, next) {
     var status1 = req.body.status;
@@ -239,6 +254,21 @@ router.post('/admin/approval', function(req, res, next) {
             });
                  
             data.remove();
+                    console.log("Image path s-----------------"+data.path);
+        // delete image in bucket
+        var deleteparams = {
+            Bucket:  'y2018m06d20ywdllxn0b3jlltsc',
+            Key:file, //This is what S3 will use to store the data uploaded                             
+           } ;
+           s3.deleteObject(deleteparams, function(err, data) {
+            if (err) {
+              console.log(err);
+              
+            } else {
+              console.log("data del is : "+data);
+            }
+          });
+  
             return res.json({ message: data._id });    
         });
         
