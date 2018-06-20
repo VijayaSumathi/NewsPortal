@@ -63,7 +63,8 @@ html
     .main
         i.arrow.left
         b
-          a(href='/last') BACK
+          a(href='/last')
+           img(src="arrow.png")
           h2 UPLOAD YOUR NEWS HERE!
     .container
       form(action='/uploadnews' method='post' enctype='multipart/form-data')
