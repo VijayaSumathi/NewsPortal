@@ -25,7 +25,7 @@ router.use(session({
 });
 
 router.get('/', function(req, res, next){  
-    res.send()
+    
     res.render('index', { title: 'index' });
 });
 router.get('/index', function(req, res, next) {
@@ -144,9 +144,9 @@ router.post('/uploadnews', function(req, res, next) {
                     news.save()
                     .then(data => {
                         console.log("News successfully uploaded");
-                        //res.send(data);
+                        return res.send(data);
                     }).catch(err => {
-                        res.status(500).send({
+                        return res.status(500).send({
                             message: err.message || "Some error occurred ."
                         });
                         console.log("error");
