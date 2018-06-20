@@ -81,7 +81,7 @@ $(function()
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.prepend('<li><h3>'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p><p>'+user.createdAt+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button>  </li>') 
+      $newslist.prepend('<li><h3 class="title">'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p><p>'+new Date().getTime()+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button>  </li>') 
     });
   }
 });
