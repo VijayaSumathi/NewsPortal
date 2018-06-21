@@ -1,16 +1,15 @@
 doctype html
 html
   head
-    title
-      | MyNews
+    link(href='https://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet')
+    title MyNews
     script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js', type='text/javascript')
     style.
       html,
       body {
-      margin: 0;
       padding: 0;
-      line-height: 1;
-      font-size: 20px;
+      line-height: 1.5;
+      font-family: 'Open sans';
       }
       header {
       background-color: #4278b7;
@@ -20,92 +19,110 @@ html
       position: absolute;
       top: 0;
       left: 0;
-      text-align: center;
       font-size: 20px;
       }
       .news-container {
-      padding: 80px 10px 10px;
-      background-color: white;
-      }
-      img {
-      width: 96%;
-      height: auto;
+      padding: 90px 3.5% 3.5%;
+      background-color: #ece6e1;
       }
       .news-list {
-      background-color: white;
+      background-color: #ffffff;
       border: 0% white;
-      box-shadow: 0px 3px 7px 1px grey;
+      box-shadow: 0px 3px 3px 1px grey;
       }
-
-      .last {
-      background-color: white;
+      img {
+      width: 100%;
+      height: 50%;
+      }
+      last {
+      background-color: #ffffff;
       border: 0% white;
-      box-shadow: 0px 3px 7px 1px grey;
+      box-shadow: 0px 3px 3px 1px grey;
       }
       .news-detail {
       width: 100%;
+      margin-bottom: 1%;
       }
-      .title {
-      width: 96%;
-      height: 17%;
-      font-family: OpenSans;
-      font-size: 140%;
+      .p {
+      width: 70%;
+      height: 20%;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
       font-style: normal;
       font-stretch: normal;
       letter-spacing: normal;
-      color: rgba(0, 0, 0, 0.87);
-      text-align: center;
+      background-color: #ece6e1;
+      padding:0%;
       }
-      .description {
-      width: 96%;
-      height: 40%;
-      font-family: OpenSans;
-      font-size: 140%;
+      .p2 {
+      width: 70%;
+      height: 20%;
+      font-family: 'Open Sans';
+      font-size: 14px;
+      font-weight: normal;
       font-style: normal;
       font-stretch: normal;
       letter-spacing: normal;
-      color: black;
-      text-align: center;
-      margin-bottom: 2%;
+      color: #4a4a4a;
+      padding: 25%;
       }
       ul {
       list-style-type: none;
       padding: 0px;
-      margin: 0px;
+      margin: 0%;
+      }
+      li {
+      background-color: #ffffff;
+      border: 0% white;
+      box-shadow: 0px 3px 3px 1px grey;
+      margin-bottom: 20px;
+      padding-bottom:30px;
+      padding-right:18px;
+      padding-left:18px;
+      padding-top:18px;
       }
       h1 {
-      margin: 2% 20% 2% 30%;
+      margin: 1% 0% 20% 60%;
       }
-      h2 {
-      margin: 0% 10% 0% 7%;
-      
+      .left-half {
+      float: left;
+      width: 75%;
       }
-      h3{
-        text-align: center;
+      .right-half {
+      float: right;
+      width: 25%;
+      }
+      .uplod {
+      width: 10%;
+      height: 10%;
+      margin: 5% 1% 10% 73%;
+      color: #ffffff;
       }
       a {
-            color: white;
-        }
-        
+      color: white;
+      }
       a:hover {
-            color: red;
-        }
+      color: red;
+      }
   body
     header
-      h1(style='float: left') Welcome To News
-      h2(style='float: right')
-        a(href='/index') Upload Your News
-        
+      .left-half
+        h1 News
+      .right-half
+        h6.uplod
+          a(href='/index')
+            img(src='/images/upload2.png')
     .news-container
-        ul#approved
-        script(src='/javascripts/index1.js')
-        ul.news-list
-          li.news-item
+      ul#approved
+      script(src='/javascripts/index1.js')
+      ul.news-list
+        li.news-item
           img(src='/images/32.jpg')
           .news-detail
             p.title
-              b
-                | World Cup 2018: Germany's Surprise Defeat To Mexico, Five Things We Learned
-            p.description
-              | Mexico created the first upset of the 2018 FIFA World Cup, overcoming defending champions Germany 1-0 in a frenetic Group F game at the Luzhniki Stadium on Sunday. Forward Hirving Lozano's 35th-minute goal proved to make the difference in a match played at a very high tempo as four-time champions Germany began their title defence on a disastrous note. Here's a look at five things we learned on a frustrating night for the reigning world champions at the Luzhniki Stadium.
-      
+              b World Cup 2018: Germany's Surprise Defeat To Mexico, Five Things We Learned
+            p2.description
+              | Mexico created the first upset of the 2018 FIFA World Cup, overcoming defending champions Germany 1-0 in a frenetic Group F game at the Luzhniki Stadium on Sunday. Forward Hirving Lozano's 35th-minute goal proved to make the difference
+              | in a match played at a very high tempo as four-time champions Germany began their title defence on a disastrous note. Here's a look at five things we learned on a frustrating night for the reigning world champions at the Luzhniki
+              | Stadium.
