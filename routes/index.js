@@ -235,23 +235,18 @@ router.post('/admin/approval', function(req, res, next) {
         
         
         uploadmynew.findOne({}, function(error, data) {
-             if(data.status=="fresh")
-            {
+            
                 console.log("Updating status to accept");
-                uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
+                uploadmynew.findByIdAndUpdate(id1,{'status':"accept"} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
                     return  res.json({ message: result._id });                 
                 });   
                                    
-            }
-            else{
-                
-                console.log("rej");
-                return  res.json({ message: "Cant  approved news"});  
-            }
+            
+          
         });
-        //  prev
+        
                      
         
     } 
@@ -284,22 +279,21 @@ router.post('/admin/approval', function(req, res, next) {
     }
     else if(status1.toLowerCase() == "reject")
     {   
-        uploadmynew.findOne({}, function(error, data) {
+        uploadmynew.findOne({ _id: id1 }, function(error, data) {
             console.log("the status " + data.status);
-            if(data.status=="accept")
+            if(data.status==="accept")
             {
                 console.log("rej");
                 return  res.json({ message: "Cant reject approved news"});  
-            }
-            else{
-                console.log("rej1");
+            }           
+                console.log("Updatind status to reject");
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
                     console.log("1 document updated");    
                     return  res.json({ message: result._id });                 
                 });   
                 console.log("news rejected ");
-            }
+            
               
         });
 
