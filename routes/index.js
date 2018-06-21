@@ -94,9 +94,6 @@ router.get('/indexhome', function(req,res, next){
     return res.render('index');
 });
   
-  
-
-
 
 router.post('/uploadnews', function(req, res, next) {       
   
@@ -109,7 +106,8 @@ router.post('/uploadnews', function(req, res, next) {
         const upload = multer({
             storage: storageEngine
         }).single('pic');  
-        upload(req, res, function(err, result) {                  
+        upload(req, res, function(err, result) 
+        {                  
                     console.log(req.file.originalname);
             
            
@@ -132,7 +130,7 @@ router.post('/uploadnews', function(req, res, next) {
                 } 
                 else
                  {
-                    console.log("Successfully uploaded data "+data.location);
+                    console.log("Successfully uploaded data ");
                     var imageurl="d1h8e9mz50lns7.cloudfront.net"+ '/' + encodeURIComponent(res.req.file.filename);
                          
                     const news = new uploadmynew({
@@ -144,7 +142,7 @@ router.post('/uploadnews', function(req, res, next) {
                     news.save()
                     .then(data => {
                         console.log("News successfully uploaded");
-                        return res.send(data);
+                        return  res.redirect('/');      
                     }).catch(err => {
                         return res.status(500).send({
                             message: err.message || "Some error occurred ."
@@ -152,26 +150,39 @@ router.post('/uploadnews', function(req, res, next) {
                         console.log("error");
                     });
                   console.log(imageurl);
+
+
+
                 }
             });
         });
-
-        return  res.render('index',{ upload: "news uploaded" });           
+         
+           //delete photo
+          fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
+            if (error) {
+                console.log('error !!');
+            }
+            else{           
+            console.log(res.req.file.filename+'Deleted !!');
+            }
         });
+             
+     });
           
+   //delte temp image
+
    
+    
     
 });
 
 
-router.post('/login', function(req, res, next) { 
-    
+router.post('/login', function(req, res, next) {     
     User.findOne({username:req.body.username},function(err,user){
        if(err)
        {
            return res.send(401);
        }
-
           if(!user)
              {
                      console.log("Incorrect username");
@@ -220,21 +231,28 @@ router.post('/admin/approval', function(req, res, next) {
     var id1 = req.body._id;
     console.log(req.body);
     if (status1.toLowerCase() == "accept")
-    {                                 
+    {           
         
+        
+        uploadmynew.findOne({}, function(error, data) {
+             if(data.status=="fresh")
+            {
+                console.log("Updating status to accept");
                 uploadmynew.findByIdAndUpdate(id1,{'status':status1} , function(err, result) {
                     if (err) throw err;
-                  /*if(data.status=="accept")
-                   {
-                   console.log("cant accept twice");
-                   res.json({ message: "Cant accept"});  
-                 }
-                 else{}*/
                     console.log("1 document updated");    
-                    return res.json({ message: result.id });   
-                    console.log("The result is :"+result._id)           
+                    return  res.json({ message: result._id });                 
+                });   
+                                   
+            }
+            else{
                 
-                });                
+                console.log("rej");
+                return  res.json({ message: "Cant  approved news"});  
+            }
+        });
+        //  prev
+                     
         
     } 
     else if(status1.toLowerCase() == "delete")
@@ -243,16 +261,7 @@ router.post('/admin/approval', function(req, res, next) {
             console.log("news deleted " + data+"the image deleted"+ data.path);
             
             const file=  path.basename(data.path);
-            console.log(file)
-              //delete photo
-              fs.unlink( __dirname + '/../public/images/'+file, function(error) {
-                if (error) {
-                   
-                }
-               
-                console.log('Deleted !!');
-            });
-                 
+          
             data.remove();
                     console.log("Image path s-----------------"+data.path);
         // delete image in bucket
