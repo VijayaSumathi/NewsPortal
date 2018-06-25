@@ -77,7 +77,7 @@ function onedit(e,id) {
   $(lielement).children(".para").html();
   $(lielement).children(".para").focus();
   $(lielement).children(".title").attr('contentEditable', true);
-  var content2=$(lielement).children(".title").html(para);
+  $(lielement).children(".title").html();
   $(lielement).children(".title").focus();
   lielement.append(' &nbsp<button class="save">save</button>');
   lielement.children(".edit").prop('disabled',true);
