@@ -77,19 +77,22 @@ function onedit(e,id) {
   $(lielement).children(".para").html();
   $(lielement).children(".para").focus();
   $(lielement).children(".title").attr('contentEditable', true);
-  var content2=$(lielement).children(".title").html();
+  var content2=$(lielement).children(".title").html(para);
   $(lielement).children(".title").focus();
-  lielement.append('<button id="save">save</button>');
-  $('#save').on('click', function(){
+  lielement.append(' &nbsp<button class="save">save</button>');
+  lielement.children(".edit").prop('disabled',true);
+  $('.save').on('click', function(){
     var editedContent= $(lielement).children(".para").html();
     var content2=$(lielement).children(".title").html();
   $.ajax({
     type:"POST",
-    url:'/edit',
+    url:'/news/edit',
     data:{_id:id,description:editedContent,title:content2},
     datatype:"text/json",
     success:function(data)
     {
+      lielement.append('<div class="saved">saved</div>')
+      lielement.children(".save").prop('disabled',true);
       console.log("edited");
     }
   });
@@ -104,7 +107,7 @@ $(function(){
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.prepend('<li><h3 id="head"class="title">'+user.title+'</h3><img src="' +user.path+ '"/><p class="para",id="paragraph">'+user.description+'</p><p>'+new Date()+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button> &nbsp  <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button> &nbsp <button name="status" value="edit" id="edtbtn"class="edit" onclick="onedit(event, \''+user._id+'\')">Edit</button></li>') 
+      $newslist.prepend('<li><h3 id="head"class="title">'+user.title+'</h3><img src="' +user.path+ '"/><p class="para",id="paragraph">'+user.description+'</p><p>'+new Date()+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> &nbsp <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button> &nbsp  <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button> &nbsp <button name="status" value="edit" id="edtbtn"class="edit" onclick="onedit(event, \''+user._id+'\')">Edit</button></li>') 
     });
   }
 });

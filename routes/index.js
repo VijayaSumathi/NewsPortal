@@ -10,8 +10,8 @@ var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
 var fs = require('fs');
 var AWS = require('aws-sdk');
-const sharp = require('sharp');
-var compress_images = require('compress-images');
+//const sharp = require('sharp');
+//var compress_images = require('compress-images');
 /*const stats = sharp.cache();
 sharp.cache( { items: 200 } );
 sharp.cache( { files: 0 } );
@@ -375,10 +375,10 @@ router.get('/news/approve', function(req, res, next) {
 
 
 router.post('/news/edit',function(req, res, next){
-    var id1 =req.body.id;
+    var id1 =req.body._id;
     var title =req.body.title;
     var description =req.body.description;   
-     
+     console.log(req.body.title);
         uploadmynew.findByIdAndUpdate(id1,{'title':title,'description':description} , function(err, result) {
             if (err) 
             {console.log(err);  
