@@ -52,6 +52,9 @@ html
       display: inline-block;
       padding: 10px;
       }
+      a{
+        image-color:black;
+      }
       .left {
       transform: rotate(135deg);
       -webkit-transform: rotate(135deg);
@@ -78,7 +81,7 @@ html
           <option value="usa">USA</option>
           </select>
         label(for='subject') Description
-        textarea#subject(name='description', placeholder='Write something..',style="height:200px",maxlength='10',required)
+        textarea#subject(name='description', placeholder='Write something..',style="height:200px",maxlength='500',required)
         label(for='country') Upload image
         input(type='file', name='pic',required)
         br
