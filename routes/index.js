@@ -374,7 +374,22 @@ router.get('/news/approve', function(req, res, next) {
 });
 
 
-
-
+router.post('/news/edit',function(req, res, next){
+    var id1 =req.body.id;
+    var title =req.body.title;
+    var description =req.body.description;   
+     
+        uploadmynew.findByIdAndUpdate(id1,{'title':title,'description':description} , function(err, result) {
+            if (err) 
+            {console.log(err);  
+            return res.json({ message: "error" });
+            }
+            else{
+            console.log("1 document updated");    
+            return  res.json({ message: result._id });
+        }                 
+        });   
+    
+});
 
 module.exports = router;
