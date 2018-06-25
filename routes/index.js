@@ -99,7 +99,8 @@ router.get('/admin/logout', function(req, res) {
 router.get('/indexhome', function(req,res, next){
     return res.render('index');
 });
-  
+
+
 
 router.post('/uploadnews', function(req, res, next) {       
   
@@ -126,20 +127,21 @@ router.post('/uploadnews', function(req, res, next) {
                  .then(function() {  
                       console.log("Image resized to 16:9")      ;
                       sharp.cache(false) ;   
+
+
                       fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
                         if (error) {
-                            console.log('error !!(unlink) \t\t'+error);
+                            console.log('\nerror \t'+error);
                         }
-                        else{           
-                        console.log(res.req.file.filename+'\tDeleted !!');
-                        }
-                    });
-                })
-                .catch(err  =>{
-                 console.log(err)
-               }
-              );
-            //
+                        else{       
+
+                        console.log('Deleted in images(sharp)');
+                      
+
+                     
+                
+               
+       
             var OUTPUT_path = './public/images/';
             compress_images('./public/images/temp/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}',OUTPUT_path, {compress_force: false, statistic: true, autoupdate: true}, false,
                                  {jpg: {engine: 'mozjpeg', command: ['-quality', '60']}},
@@ -147,17 +149,16 @@ router.post('/uploadnews', function(req, res, next) {
                                  {svg: {engine: 'svgo', command: '--multipass'}},
                                  {gif: {engine: 'gifsicle', command: ['--colors', '64', '--use-col=web']}}, function(err){
                                 console.log(err);
+                                
                                 fs.unlink( __dirname + '/../public/images/temp/'+res.req.file.filename, function(error) {
                                     if (error) {
-                                        console.log('error !!(unlink) \t\t'+error);
+                                        console.log('\nerror \t'+error);
                                     }
-                                    else{           
-                                    console.log(res.req.file.filename+'\tDeleted in temp!!');
-                                    }
-                                });
-            });
-               
-      // compress image
+                                    else{       
+            
+                                    console.log('Deleted in images(compress image )');                              
+            
+                             // upload data
      
                fs.readFile(req.file.path, function(err, file_buffer){
                 console.log("\nthe path\t "+req.file.path)
@@ -188,7 +189,16 @@ router.post('/uploadnews', function(req, res, next) {
                     news.save()
                     .then(data => {
                         console.log("News successfully uploaded");
-                        return  res.redirect('/');      
+                        fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
+                            if (error) {
+                                console.log('\nerror \t'+error);
+                            }
+                            else{      
+                            console.log('Deleted in images(upload news )');   
+                            return  res.redirect('/');    
+                            }
+                        });
+                          
                     }).catch(err => {
                         return res.status(500).send({
                             message: err.message || "Some error occurred ."
@@ -201,22 +211,27 @@ router.post('/uploadnews', function(req, res, next) {
 
                 }
             });
-            fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
-                if (error) {
-                    console.log('error !!(unlink) \t\t'+error);
-                }
-                else{           
-                console.log(res.req.file.filename+'\t\tDeleted in Images !!');
-                }
-            });
+            
         });
          
+    }
+});                   
+                                //end
+    });
+}
+});
+})          //then sharp
+    .catch(err  =>{
+        console.log(err)
+      }
+     );
+   //
            //delete photo
            
              
      });  // upload
           
-   //delte temp image
+   
 
    
     
