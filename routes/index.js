@@ -10,6 +10,12 @@ var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
 var fs = require('fs');
 var AWS = require('aws-sdk');
+const sharp = require('sharp');
+var compress_images = require('compress-images');
+/*const stats = sharp.cache();
+sharp.cache( { items: 200 } );
+sharp.cache( { files: 0 } );
+sharp.cache(false)*/
 router.use(session({
     cookieName: 'session',
     secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
@@ -108,13 +114,53 @@ router.post('/uploadnews', function(req, res, next) {
         }).single('pic');  
         upload(req, res, function(err, result) 
         {                  
-                    console.log(req.file.originalname);
-            
-           
-               console.log(req.file.path)
-
+                   // *****    resize image    ************
+                //sharp.cache(false);
+                sharp(req.file.path)  
+                .resize(1280, 720, {
+                 kernel: sharp.kernel.nearest
+                    }) 
+                .background('white')
+                .embed()
+                 .toFile('./public/images/temp/'+res.req.file.filename)
+                 .then(function() {  
+                      console.log("Image resized to 16:9")      ;
+                      sharp.cache(false) ;   
+                      fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
+                        if (error) {
+                            console.log('error !!(unlink) \t\t'+error);
+                        }
+                        else{           
+                        console.log(res.req.file.filename+'\tDeleted !!');
+                        }
+                    });
+                })
+                .catch(err  =>{
+                 console.log(err)
+               }
+              );
+            //
+            var OUTPUT_path = './public/images/';
+            compress_images('./public/images/temp/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}',OUTPUT_path, {compress_force: false, statistic: true, autoupdate: true}, false,
+                                 {jpg: {engine: 'mozjpeg', command: ['-quality', '60']}},
+                                 {png: {engine: 'pngquant', command: ['--quality=20-50']}},
+                                 {svg: {engine: 'svgo', command: '--multipass'}},
+                                 {gif: {engine: 'gifsicle', command: ['--colors', '64', '--use-col=web']}}, function(err){
+                                console.log(err);
+                                fs.unlink( __dirname + '/../public/images/temp/'+res.req.file.filename, function(error) {
+                                    if (error) {
+                                        console.log('error !!(unlink) \t\t'+error);
+                                    }
+                                    else{           
+                                    console.log(res.req.file.filename+'\tDeleted in temp!!');
+                                    }
+                                });
+            });
+               
+      // compress image
+     
                fs.readFile(req.file.path, function(err, file_buffer){
-            
+                console.log("\nthe path\t "+req.file.path)
                     var params = {
                         Bucket:  'y2018m06d20ywdllxn0b3jlltsc',
                         Key:res.req.file.filename, //This is what S3 will use to store the data uploaded.
@@ -155,19 +201,20 @@ router.post('/uploadnews', function(req, res, next) {
 
                 }
             });
+            fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
+                if (error) {
+                    console.log('error !!(unlink) \t\t'+error);
+                }
+                else{           
+                console.log(res.req.file.filename+'\t\tDeleted in Images !!');
+                }
+            });
         });
          
            //delete photo
-          fs.unlink( __dirname + '/../public/images/'+res.req.file.filename, function(error) {
-            if (error) {
-                console.log('error !!');
-            }
-            else{           
-            console.log(res.req.file.filename+'Deleted !!');
-            }
-        });
+           
              
-     });
+     });  // upload
           
    //delte temp image
 
