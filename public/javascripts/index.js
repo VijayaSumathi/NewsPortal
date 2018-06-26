@@ -46,7 +46,8 @@ function onReject(e,id){
   })
 }
 function onDelete(e,id){
-  
+  var target = e.currentTarget;
+  var lielement = $(target).closest('li');
   console.log("id",id);
   $.ajax({
     type:"POST",
@@ -55,8 +56,7 @@ function onDelete(e,id){
     datatype:"json",
     success:function(data){
       console.log("onDelete Succes");
-      lielement.remove();var target = e.currentTarget;
-      var lielement = $(target).closest('li');
+      lielement.remove();
       lielement.append('<div class="delete1">Deleted</div>');
       console.log(data);
       lielement.children(".delete").prop('disabled', true);
