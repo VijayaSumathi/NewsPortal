@@ -86,7 +86,7 @@ function onedit(e,id) {
     var content2=$(lielement).children(".title").html();
   $.ajax({
     type:"POST",
-    url:'/news/edit',
+    url:'/admin/news/edit',
     data:{_id:id,description:editedContent,title:content2},
     datatype:"text/json",
     success:function(data)
