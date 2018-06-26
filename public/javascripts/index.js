@@ -67,12 +67,38 @@ function onDelete(e,id){
       }
       lielement.children('.CellLabel').removeByContent('approved');
     }
+
   })
 }
-		
-
-$(function()
-{
+function onedit(e,id) {
+  var target = e.currentTarget;
+  var lielement = $(target).closest('li');
+  $(lielement).children(".para").attr('contentEditable', true);
+  $(lielement).children(".para").html();
+  $(lielement).children(".para").focus();
+  $(lielement).children(".title").attr('contentEditable', true);
+  $(lielement).children(".title").html();
+  $(lielement).children(".title").focus();
+  lielement.append(' &nbsp<button class="save">save</button>');
+  lielement.children(".edit").prop('disabled',true);
+  $('.save').on('click', function(){
+    var editedContent= $(lielement).children(".para").html();
+    var content2=$(lielement).children(".title").html();
+  $.ajax({
+    type:"POST",
+    url:'/news/edit',
+    data:{_id:id,description:editedContent,title:content2},
+    datatype:"text/json",
+    success:function(data)
+    {
+      lielement.append('<div class="saved">saved</div>')
+      lielement.children(".save").prop('disabled',true);
+      console.log("edited");
+    }
+  });
+})
+}
+$(function(){
   var $newslist=$('#newslist');
   $.ajax( {
     type:'GET',
@@ -81,7 +107,7 @@ $(function()
       console.log(newslist);
       $.each(newslist.docs,function(i,user)
       {
-      $newslist.prepend('<li><h3 class="title">'+user.title+'</h3><img src="' +user.path+ '"/><p>'+user.description+'</p><p>'+new Date().getTime()+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button>     <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button>  </li>') 
+      $newslist.prepend('<li><h3 id="head"class="title">'+user.title+'</h3><img src="' +user.path+ '"/><p class="para",id="paragraph">'+user.description+'</p><p>'+new Date()+' </p><button name="status" value="accept"  class="click" onclick="onAccept(event, \''+user._id+'\')"  >Approve</button> &nbsp <button name="status" value="reject" class="hide" onclick="onReject(event, \''+user._id+'\')"   >Reject</button> &nbsp  <button name="status" value="delete" class="delete" onclick="onDelete(event, \''+user._id+'\')"  >Delete</button> &nbsp <button name="status" value="edit" id="edtbtn"class="edit" onclick="onedit(event, \''+user._id+'\')">Edit</button></li>') 
     });
   }
 });

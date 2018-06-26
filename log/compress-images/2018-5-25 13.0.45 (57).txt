@@ -1,0 +1,10 @@
+File from: [./public/images/temp/pic-1529911841561.jpg]
+
+File to: [./public/images/pic-1529911841561.jpg]
+
+Compression algorithm: [mozjpeg]
+
+============== LOG ============== 
+Error: Command failed: d:\WEBAPP\new\NewsPortal\node_modules\mozjpeg\vendor\cjpeg.exe -quality 60 -outfile ./public/images/pic-1529911841561.jpg ./public/images/temp/pic-1529911841561.jpg
+d:\WEBAPP\new\NewsPortal\node_modules\mozjpeg\vendor\cjpeg.exe: can't open ./public/images/pic-1529911841561.jpg
+================================= 
