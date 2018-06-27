@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 var uploadmynew = require('../models/Mynews');
 var User = require('../models/adminlogin');
-var jwt = require('jsonwebtoken');
+//var jwt = require('jsonwebtoken');
 const multer = require('multer');
-
+var admin = require('../scripts/login.js')
 const path = require('path');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
@@ -12,10 +12,7 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 const sharp = require('sharp');
 var compress_images = require('compress-images');
-/*const stats = sharp.cache();
-sharp.cache( { items: 200 } );
-sharp.cache( { files: 0 } );
-sharp.cache(false)*/
+
 router.use(session({
     cookieName: 'session',
     secret: 'eg[isfd-8yF9-7w2315df{}+Ijsli;;to8',
@@ -374,7 +371,7 @@ router.get('/news/approve', function(req, res, next) {
 });
 
 
-router.post('/news/edit',function(req, res, next){
+router.post('/admin/news/edit',function(req, res, next){
     var id1 =req.body._id;
     var title =req.body.title;
     var description =req.body.description;   
@@ -385,7 +382,7 @@ router.post('/news/edit',function(req, res, next){
             return res.json({ message: "error" });
             }
             else{
-            console.log("1 document updated");    
+            console.log("One document updated");    
             return  res.json({ message: result._id });
         }                 
         });   
