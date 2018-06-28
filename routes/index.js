@@ -4,11 +4,7 @@ var uploadmynew = require('../models/Mynews');
 var User = require('../models/adminlogin');
 //var jwt = require('jsonwebtoken');
 const multer = require('multer');
-<<<<<<< HEAD
-
-=======
 //var admin = require('../scripts/login.js')
->>>>>>> 77c026869d8b6c35c8012b149465e27a46bd15ac
 const path = require('path');
 var session = require('client-sessions');
 var bcrypt = require('bcryptjs');
