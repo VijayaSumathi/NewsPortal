@@ -70,9 +70,12 @@ function onDelete(e,id){
 
   })
 }
+
 function onedit(e,id) {
   var target = e.currentTarget;
   var lielement = $(target).closest('li');
+  $(lielement).children(".para").css('border', "solid 1px #212121");
+  $(lielement).children(".title").css('border', "solid 1px #212121");
   $(lielement).children(".para").attr('contentEditable', true);
   $(lielement).children(".para").html();
   $(lielement).children(".para").focus();
@@ -82,9 +85,11 @@ function onedit(e,id) {
   lielement.append(' &nbsp<button class="save">save</button>');
   lielement.children(".edit").prop('disabled',true);
   $('.save').on('click', function(){
+    $(lielement).children(".para").css('border','');
+    $(lielement).children(".title").css('border','');
     var editedContent= $(lielement).children(".para").html();
     var content2=$(lielement).children(".title").html();
-  $.ajax({
+  $.ajax( {
     type:"POST",
     url:'/admin/news/edit',
     data:{_id:id,description:editedContent,title:content2},
@@ -93,11 +98,18 @@ function onedit(e,id) {
     {
       lielement.append('<div class="saved">saved</div>')
       lielement.children(".save").prop('disabled',true);
+      if(data) {   // DO SOMETHING
+        $('.CellLabel').empty();
+        $('.reject').empty();// enable butto
+        $('delete1').empty();
+      }
       console.log("edited");
     }
   });
-})
-}
+});
+};
+
+
 $(function(){
   var $newslist=$('#newslist');
   $.ajax( {
