@@ -7,7 +7,7 @@ function onAccept(e, id){
   var target = e.currentTarget;
   var lielement = $(target).closest('li');
   console.log("id",id);
-  $.ajax({
+  $.ajax( {
     type:"POST",
     url:'/admin/approval',
     data:{_id : id, status:"accept"},
@@ -21,6 +21,7 @@ function onAccept(e, id){
       if(data) {   // DO SOMETHING
         $('.reject').empty();// enable butto
         $('delete1').empty();
+        $('saved').empty();
       }
     }
   })
@@ -40,7 +41,10 @@ function onReject(e,id){
       lielement.append('<div class="reject">Rejected</div>');
       console.log(data);
       lielement.children(".hide").prop('disabled', true); 
-      
+      if(data) {   // DO SOMETHING
+        $('.saved').empty();// enable butto
+        $('delete1').empty();
+      }
       //lielement.children("").prop('disabled', true);
     }
   })
