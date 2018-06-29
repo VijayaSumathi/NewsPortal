@@ -5,18 +5,17 @@ html
   style.
     body {font-family: Arial, Helvetica, sans-serif;}
     h2{
-    margin-top:0px;
+    margin: 30px 30% 30px 20%;
     color: white;
-    text-align: center;
+    font-size:30px;
     }
     .main {
     overflow: hidden;
     background-color:#4278b7;
-    position:relative;
     width: 98.5%;
     padding-left:10px;
     padding-right:10px;
-    max-height:80px;
+    height:80px;
     }
     input[type=text], select, textarea {
     width: 100%;
@@ -48,43 +47,40 @@ html
     .container {
     border-radius: 5px;
     background-color: #f2f2f2;
-    
     padding:10px;
     max-width:98.5%;
     width: 100%;
-    }label{
-      font-size:25px;
-      padding-top:4em;
-      padding-bottom:4em;
-      margin-bottom:20px;
     }
-    i {
-    border: solid black;
-    border-width: 0 0px 0px 0;
-    display: inline-block;
-    padding: 12px;
-    margin-top: 20px;
-    
+    label{
+    font-size:25px;
+    margin-bottom:20px;
+    font: bold;
     }
-    a{
-    image-color:black;
+    .left-half {
+    float: left;
+    width: 10%;
     }
-    .left {
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
+    .right-half {
+    float: right;
+    width: 90%;
+    height:100%;
+    }
+    img{
+    padding: 20px 10px 10px 10px;  
+    }
+    .a{
+    margin-top:50px;
     }
     check {
     font-size: 200%;
-    
-    
     }
   body
     .main
-        i.arrow.left
-        b
-          a(href='/last')
-           img(src="/images/arrow.png")
-          h2 UPLOAD YOUR NEWS HERE!
+      .left-half
+        a(href='/last')
+          img(src="/images/back1.png")
+      .right-half
+         h2 UPLOAD YOUR NEWS HERE!    
     .container
       form(action='/uploadnews' method='post' enctype='multipart/form-data' style='font-size: 20px;')
         label(for='lname') Title
