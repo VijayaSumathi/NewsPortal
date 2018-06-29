@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
 
     res.render('index', { title: 'index' });
 });
-router.get('/index', function(req, res, next) {
+router.get('/upload', function(req, res, next) {
     res.render('upload');
 });
 
