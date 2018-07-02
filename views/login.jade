@@ -16,8 +16,8 @@ html
       }
       .log-form {
       width: 40%;
-      min-width: 320px;
-      max-width: 475px;
+      min-width: 300px;
+      max-width: 400px;
       background: #fff;
       position: absolute;
       top: 50%;
@@ -29,11 +29,15 @@ html
       transform: translate(-50%, -50%);
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
       }
-      @media (max-width: 40em) {
+      @media only screen and (max-width: 1000px)  {
       .log-form {
-      width: 95%;
+      width: 100%;
+      min-width:700px;
+      max-width:800px;
+      min-height:700px;
+      max-height:800px;
       position: relative;
-      margin: 2.5% auto 0 auto;
+      margin: 25% auto 0 auto;
       left: 0%;
       -webkit-transform: translate(0%, 0%);
       -moz-transform: translate(0%, 0%);
@@ -47,8 +51,27 @@ html
       width: 100%;
       padding: 2em;
       }
+      @media only screen and (max-width: 1000px){.log-form form {
+      display: block;
+      width: 100%;
+      padding-left: 2em;
+      padding-right:2em;
+      padding-top:10em;
+      
+      }}@media only screen and (max-width: 1000px){.log-form input {
+      display: block;
+      margin: auto auto;
+      width: 100%;
+      margin-bottom: 4em;
+      padding-top: 4em;
+      border: none;
+      border-bottom: 1px solid #eaeaea;
+      padding-bottom: 2em;
+      color: #757575;
+      }
+      }
       .log-form h2 {
-      color: #5d5d5d;
+      color: white;
       font-family: 'open sans condensed';
       font-size: 1.35em;
       display: block;
@@ -68,60 +91,35 @@ html
       margin-bottom: 2em;
       padding: .5em 0;
       border: none;
-      border-bottom: 1px solid #eaeaea;
+      border-bottom: 2px solid #eaeaea;
       padding-bottom: 1.25em;
       color: #757575;
       }
       .log-form input:focus {
       outline: none;
-      }
-      .log-form .btn {
-      display: inline-block;
-      background: #1fb5bf;
-      border: 1px solid #1ba0a9;
-      padding: .5em 2em;
-      color: white;
-      margin-right: .5em;
-      box-shadow: inset 0px 1px 0px rgba(255, 255, 255, 0.2);
-      }
-      .log-form .btn:hover {
-      background: #23cad5;
-      }
-      .log-form .btn:active {
-      background: #1fb5bf;
-      box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.1);
-      }
-      .log-form .btn:focus {
-      outline: none;
-      }
-      .log-form .forgot {
-      color: #33d3de;
-      line-height: .5em;
-      position: relative;
-      top: 2.5em;
-      text-decoration: none;
-      font-size: .75em;
-      margin: 0;
-      padding: 0;
-      float: right;
-      }
-      .log-form .forgot:hover {
-      color: #1ba0a9;
-      }
+      }@media only screen and (max-width: 1000px){.log-form input.user{
+        font-size:30px;
+      }}@media only screen and (max-width: 1000px){.log-form input.pwd{
+        font-size:30px;
+      }}@media only screen and (max-width: 1000px){.log-form input.sub{
+        font-size:30px;
+      }}
       .a{
         font-family: 'open sans condensed';
         color:Blue;
       }
+      
+      
   body
     .log-form
       h2 Login to your account
       form(action='/login', method='post')
-        input(type='text', title='username', placeholder='username', name='username')
-        input(type='password', title='username', placeholder='password', name='password')
-        input(type='submit', value='Submit') 
+        input.user(type='text', title='username', placeholder='username', name='username')
+        input.pwd(type='password', title='username', placeholder='password', name='password')
+        input.sub(type='submit', value='submit') 
       
         if message
-        .a
+         .a
           p 
           |#{message}
         

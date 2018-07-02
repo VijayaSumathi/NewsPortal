@@ -56,15 +56,16 @@ padding-left:70px;
             padding-top:10px;
 
         }
- .container1{
- display: block;
- text-transform: uppercase;
- float:right;
- background-color: #4278b7;
-  width: 20%;
-  padding-bottom:22.5px;
-}
-
+        
+        
+.container1{
+    display: block;
+    text-transform: uppercase;
+    float:right;
+    background-color: #4278b7;
+     width: 20%;
+     padding-bottom:22.5px;
+   }
      .content {
          max-width: 500px;
         
