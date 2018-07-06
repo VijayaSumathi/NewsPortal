@@ -57,7 +57,7 @@ padding-left:70px;
 
         }
         
-        
+     
 .container1{
     display: block;
     text-transform: uppercase;
@@ -65,14 +65,28 @@ padding-left:70px;
     background-color: #4278b7;
      width: 20%;
      padding-bottom:22.5px;
-   }
+   }  @media only screen and (max-width: 600px) {
+    
+    .content {
+         
+        max-width: 500px;
+       
+       margin: auto;
+       background:#e9e9e9;
+       padding-right: 1px;
+       padding-left: 1px;
+   
+       }
+}
      .content {
          max-width: 500px;
         
         margin: auto;
         background:#e9e9e9;
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 0px;
+        padding-left: 0px;
+    
+        
     
         }
         p{ font-family: 'Open Sans', sans-serif;
