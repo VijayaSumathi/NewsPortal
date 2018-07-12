@@ -23,8 +23,8 @@ router.use(session({
     ephemeral: true
 }));
 var s3 = new AWS.S3({
-    accessKeyId: 'AKIAJUJCSZVDZ72WW7JA',
-    secretAccessKey: '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'
+    accessKeyId: '',
+    secretAccessKey: ''
 });
 
 router.get('/', function(req, res, next) {
@@ -150,7 +150,7 @@ router.post('/uploadnews', function(req, res, next) {
                                     fs.readFile(req.file.path, function(err, file_buffer) {
                                         console.log("\nthe path\t " + req.file.path)
                                         var params = {
-                                            Bucket: 'y2018m06d20ywdllxn0b3jlltsc',
+                                            Bucket: '',
                                             Key: res.req.file.filename, //This is what S3 will use to store the data uploaded.
                                             Body: file_buffer, //the actual *file* being uploaded
                                             ContentType: req.file.mimetype, //type of file being uploaded
